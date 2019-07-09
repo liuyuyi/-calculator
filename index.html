@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<title>价格计算器</title>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<style>
+		table{
+			width:100%;border-collapse: collapse; border-color:#f00;
+			font-size: 14px;
+		}
+		td{
+			padding: 6px 3px;
+			text-align: center;
+			border: 1px solid #999999;
+			
+		}
+		input{
+			height: 30px;
+			padding: 0px 4px;
+			line-height: 25px;
+		}
+		.item:nth-child(even){
+			background: #d6e9f6;
+		}
+	</style>
+</head>
+<body>
+	<div id="app">
+		<div style="color:red;margin-bottom:10px;">
+			公式：当日（铜价*0.3）+（铝价*0.7）+加工费
+		</div>
+		<div>
+			<div style="margin: 20px 0px;">
+				<b>铜价：</b><input type="number" v-model="tongPrice"><br /><br />
+				<b>铝价：</b><input type="number" v-model="lvPrice"><br />
+			</div>
+		</div>
+		<table style="border: 1px solid #999999;">
+			<tr>
+				<td>序号</td>
+				<td>规格</td>
+				<td>加工费<br/>CCAQA-1/155</td>
+				<td>当日铜价</td>
+				<td>当日铝价</td>
+				<td>当日含税价单价</td>
+				<td>当日不含税单价</td>
+			</tr>
+			<tr v-for="(item, index) in listData" :key="item.id" class="item">
+				<td>{{item.id}}</td>
+				<td style="white-space: nowrap;">{{item.size}}</td>
+				<td>{{item.addMuch}}</td>
+				<td rowspan="10" v-show="index === 0 ? true : false" style="background: #a1d8fc;">{{tongPrice}}</td>
+				<td rowspan="10" v-show="index === 0 ? true : false" style="background: #c5a1fc;">{{lvPrice}}</td>
+				<td>{{ ((tongPrice*0.3)+(lvPrice*0.7)+item.addMuch).toFixed(2) }}</td>
+				<td>{{ (((tongPrice*0.3)+(lvPrice*0.7)+item.addMuch).toFixed(2)/1.08).toFixed(2) }}</td>
+			</tr>
+		</table>
+		
+		<div style="margin-top:20px;">
+			QZ在以上基础上减0.5元/KG;QZY180和颜色线在以上基础上加1.00/KG
+		</div>
+		<div>
+
+		</div>
+	</div>
+
+	<script type="text/javascript">
+
+		var app = new Vue({
+			el: '#app',
+			data: {
+				message: 'Hello Vue!',
+				listData: [{id: 1, size: '0.10-0.11', addMuch: 26.16},
+				{ id: 2, size: '0.12-0.13', addMuch: 24.11 },
+				{ id: 3, size: '0.14-0.15', addMuch: 18.56 },
+				{ id: 4, size: '0.16-0.17', addMuch: 17.31 },
+				{ id: 6, size: '0.18-0.19', addMuch: 16.76 },
+				{ id: 7, size: '0.20-0.24', addMuch: 13.83 },
+				{ id: 8, size: '0.25-0.29', addMuch: 13.33 },
+				{ id: 9, size: '0.30-0.39', addMuch: 13.26 },
+				{ id: 10, size: '0.40-0.49', addMuch: 12.80 },
+				{ id: 11, size: '0.50-1.30', addMuch: 12.40 }],
+				tongPrice: 46.49,
+				lvPrice: 13.77,
+			}
+		});
+
+	</script>
+
+</body>
+</html>
