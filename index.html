@@ -5,6 +5,8 @@
 	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 	<title>价格计算器</title>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
 	<style>
 		table{
 			width:100%;border-collapse: collapse; border-color:#f00;
@@ -111,7 +113,30 @@
 				lvPrice: 0,
 				showPrice: true,
 				pcShow: false
-			}
+			},
+			created() {
+
+				var year = new Date().getFullYear(),
+					month = new Date().getMonth()+1,
+					day = new Date().getDate();
+					
+				axios.get('/getPrice',{
+					params:{ time: new Date(year, month, day, 00, 00, 00).getTime()}
+				})
+				  .then( (response) =>{
+				    // handle success
+					console.log(response.data);
+					if(response.data){
+						this.tongPrice = response.data.toPrice/1000;
+						this.lvPrice = response.data.lvPrice/1000;
+					}
+				  })
+				  .catch(function (error) {
+				    // handle error
+				    console.log(error);
+				  })
+				
+			},
 		});
 
 	</script>
