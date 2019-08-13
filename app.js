@@ -54,7 +54,7 @@ const PriceSchema = {
     upDateTime: { type: String },
     creatDate: { type: Number }
 }
-const PriceModel = mongoose.model('newprice', PriceSchema);
+// const PriceModel = mongoose.model('newprice', PriceSchema);
 const Rule2 = new schedule.RecurrenceRule();
     Rule2.hour = [10,11,12];
     Rule2.minute = [00,30];
