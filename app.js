@@ -9,14 +9,14 @@ const nodemailer = require('nodemailer');
 const schedule = require('node-schedule');
 const targetUrl = 'https://m.cnal.com/market/changjiang/';
 // 截取网页生成图
-// const puppeteer = require('puppeteer');
-// 创建一个SMTP客户端配置
+const puppeteer = require('puppeteer');
+// 创建一个SMTP客户端配置  xhodgaqyxlcebibg
 const config = {
-    host: 'smtp.163.com', //网易163邮箱 smtp.163.com
-    port: 25, //网易邮箱端口 25
+    host: 'smtp.qq.com', //网易163邮箱 smtp.163.com
+    port: 465, //网易邮箱端口 25
     auth: {
-        user: 'yuyi.style@163.com', //邮箱账号
-        pass: 'liuyuyi1989' //邮箱的授权码
+        user: '339266478@qq.com', //邮箱账号
+        pass: 'xhodgaqyxlcebibg' //邮箱的授权码
     }
 };
 // 创建一个SMTP客户端对象
@@ -24,13 +24,14 @@ const transporter = nodemailer.createTransport(config);
 // 创建一个邮件对象
 var mail = {
     // 发件人
-    from: 'yuyi<yuyi.style@163.com>',
+    from: '<339266478@qq.com>',
     // 主题
     subject: '铜铝价格',
     // 收件人
-    to: '339266478@qq.com,328826649@qq.com',
+    to: '328826649@qq.com',
+    cc: '339266478@qq.com',
     // 邮件内容，HTML格式
-    html: ''
+    html: 'sdadsasda'
 };
 var listData = [{id: 1, size: '0.10-0.11', addMuch: 26.16},
 { id: 2, size: '0.12-0.13', addMuch: 24.11 },
@@ -42,16 +43,6 @@ var listData = [{id: 1, size: '0.10-0.11', addMuch: 26.16},
 { id: 9, size: '0.30-0.39', addMuch: 13.26 },
 { id: 10, size: '0.40-0.49', addMuch: 12.80 },
 { id: 11, size: '0.50-1.30', addMuch: 12.40 }];
-var shtml = '<table class="table" style="border: 1px solid #999999;">\
-<tr>\
-    <td style="	padding: 6px 3px;text-align: center;border: 1px solid #999999;">序号</td>\
-    <td style="	padding: 6px 3px;text-align: center;border: 1px solid #999999;">规格</td>\
-    <td style="	padding: 6px 3px;text-align: center;border: 1px solid #999999;">加工费<br/>CCAQA-1/155</td>\
-    <td style="	padding: 6px 3px;text-align: center;border: 1px solid #999999;">当日铜价</td>\
-    <td style="	padding: 6px 3px;text-align: center;border: 1px solid #999999;">当日铝价</td>\
-    <td style="	padding: 6px 3px;text-align: center;border: 1px solid #999999;">当日含税价单价</td>\
-    <td style="	padding: 6px 3px;text-align: center;border: 1px solid #999999;">当日不含税单价</td>\
-</tr>';
 /*  数据库连接  */
 const PriceSchema = {
     toPrice: { // 铜
@@ -63,22 +54,22 @@ const PriceSchema = {
     upDateTime: { type: String },
     creatDate: { type: Number }
 }
-// const PriceModel = mongoose.model('newprice', PriceSchema);
+const PriceModel = mongoose.model('newprice', PriceSchema);
 const Rule2 = new schedule.RecurrenceRule();
-    Rule2.hour = [09];
-    Rule2.minute = [00];
+    Rule2.hour = [10,11,12];
+    Rule2.minute = [00,30];
 
 schedule.scheduleJob(Rule2,  () =>{
 
-    // (async () => {
-    //     const browser = await puppeteer.launch();
-    //     const page = await browser.newPage();
-    //     await page.goto(targetUrl);
-    //     await page.screenshot({
-    //         path: 'example.jpg'
-    //     });
-    //     await browser.close();
-    // })();
+    (async () => {
+        const browser = await puppeteer.launch();
+        const page = await browser.newPage();
+        await page.goto(targetUrl);
+        await page.screenshot({
+            path: './public/images/example.jpg'
+        });
+        await browser.close();
+    })();
 
     https.get(targetUrl, (res) => {
 
@@ -88,7 +79,6 @@ schedule.scheduleJob(Rule2,  () =>{
 
         // 抓取页面内容
         res.on('data',  (chunk) =>{
-            console.log(chunk)
             html += chunk;
         });
 
@@ -112,6 +102,25 @@ schedule.scheduleJob(Rule2,  () =>{
                 }
             }
 
+            var shtml = '<p style="font-size:20px;font-weight:bold;padding:0px;margin:0px;">当前\
+                <span style="color:blue;">铝</span>价格：\
+                <span style="color:red;">' + priceData.lvPrice + '</span></p>\
+                <p style="font-size:20px;font-weight:bold;padding:0px;margin:0px;"> 当前\
+                <span style="color:green;">铜</span>价格： \
+                <span style="color:red;">' + priceData.toPrice + '</span></p> \
+                <p>截图如下:</p>\
+                <p><img src="cid:img1"></p>\
+                <table class="table" style="border: 1px solid #999999;">\
+                    <tr>\
+                    <td style="	padding: 6px 3px;text-align: center;border: 1px solid #999999;">序号</td>\
+                    <td style="	padding: 6px 3px;text-align: center;border: 1px solid #999999;">规格</td>\
+                    <td style="	padding: 6px 3px;text-align: center;border: 1px solid #999999;">加工费<br/>CCAQA-1/155</td>\
+                    <td style="	padding: 6px 3px;text-align: center;border: 1px solid #999999;">当日铜价</td>\
+                    <td style="	padding: 6px 3px;text-align: center;border: 1px solid #999999;">当日铝价</td>\
+                    <td style="	padding: 6px 3px;text-align: center;border: 1px solid #999999;">当日含税价单价</td>\
+                    <td style="	padding: 6px 3px;text-align: center;border: 1px solid #999999;">当日不含税单价</td>\
+                </tr>';
+
             for(var e=0,elen=listData.length;e<elen;e++){
 
                 var item = listData[e],
@@ -132,12 +141,19 @@ schedule.scheduleJob(Rule2,  () =>{
 
             mail.html = shtml;
             mail.subject = priceData.upDateTime + '铜铝价格';
-
+            // 伪代码
+            var img = fs.readFileSync('./public/images/example.jpg')
+            mail.attachments =  [{
+                filename: '实时价格网站截图',
+                content: img,
+                cid: 'img1'
+            }]
+            
             send(mail);
 
             // PriceModel.findOne({
             //     upDateTime: priceData.upDateTime
-            // }, function (err, doc) {
+            // },  (err, doc) =>{
                 
             //     if(doc === null){
 
@@ -183,10 +199,10 @@ app.get('/getPrice', (req, res) => {
     });
 });
 
-var server = app.listen(3000,  () =>{
+var server = app.listen(3000, () =>{
 
-    var host = server.address().address
-    var port = server.address().port
+    var host = server.address().address;
+    var port = server.address().port;
 
     console.log("应用实例，访问地址为 http://%s:%s", host, port)
 
