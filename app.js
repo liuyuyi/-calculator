@@ -31,7 +31,7 @@ var mail = {
     to: '328826649@qq.com',
     cc: '339266478@qq.com',
     // 邮件内容，HTML格式
-    html: 'sdadsasda'
+    html: ''
 };
 var listData = [{id: 1, size: '0.10-0.11', addMuch: 26.16},
 { id: 2, size: '0.12-0.13', addMuch: 24.11 },
@@ -56,7 +56,7 @@ const PriceSchema = {
 }
 const PriceModel = mongoose.model('newprice', PriceSchema);
 const Rule2 = new schedule.RecurrenceRule();
-    Rule2.hour = [10,11,12];
+    Rule2.hour = [10,11,12,14];
     Rule2.minute = [00,30];
 
 schedule.scheduleJob(Rule2,  () =>{
@@ -66,7 +66,13 @@ schedule.scheduleJob(Rule2,  () =>{
         const page = await browser.newPage();
         await page.goto(targetUrl);
         await page.screenshot({
-            path: '/public/images/example.jpg'
+            path: './public/images/example.jpg',
+            clip:{
+                x: 0,
+                y: 0,
+                width: 800,
+                height: 350
+            }
         });
         await browser.close();
     })();
@@ -149,8 +155,6 @@ schedule.scheduleJob(Rule2,  () =>{
                 cid: 'img1'
             }]
             
-            // send(mail);
-
             PriceModel.findOne({
                 upDateTime: priceData.upDateTime
             },  (err, doc) =>{
@@ -159,7 +163,8 @@ schedule.scheduleJob(Rule2,  () =>{
 
                     var price = new PriceModel(priceData);
                     price.save();
-                    console.log('已经存入')
+                    send(mail);
+                    console.log('已经存入并发送')
 
                 }else{
                     console.log('已经存在不保存')
@@ -205,6 +210,6 @@ var server = app.listen(3000, () =>{
     var host = server.address().address;
     var port = server.address().port;
 
-    console.log("应用实例，访问地址为 http://%s:%s", host, port)
+    // console.log("应用实例，访问地址为 http://%s:%s", host, port)
 
 });
