@@ -56,26 +56,8 @@ const PriceSchema = {
 }
 const PriceModel = mongoose.model('newprice', PriceSchema);
 const Rule2 = new schedule.RecurrenceRule();
-    Rule2.hour = [10,11,12,14];
-    Rule2.minute = [00,30];
-
-(async () => {
-    const browser = await puppeteer.launch({
-        args: ['--no-sandbox']
-    });
-    const page = await browser.newPage();
-    await page.goto(targetUrl);
-    await page.screenshot({
-        path: './public/images/example.jpg',
-        clip: {
-            x: 0,
-            y: 0,
-            width: 800,
-            height: 350
-        }
-    });
-    await browser.close();
-})();
+    Rule2.hour = [10,11,12,15];
+    Rule2.minute = [00,30,10];
 
 schedule.scheduleJob(Rule2,  () =>{
 
@@ -92,7 +74,7 @@ schedule.scheduleJob(Rule2,  () =>{
                 x: 0,
                 y: 0,
                 width: 800,
-                height: 350
+                height: 500
             }
         });
         await browser.close();
@@ -175,7 +157,7 @@ schedule.scheduleJob(Rule2,  () =>{
                 content: img,
                 cid: 'img1'
             }]
-            
+            send(mail);
             PriceModel.findOne({
                 upDateTime: priceData.upDateTime
             },  (err, doc) =>{
@@ -184,7 +166,6 @@ schedule.scheduleJob(Rule2,  () =>{
 
                     var price = new PriceModel(priceData);
                     price.save();
-                    send(mail);
                     console.log('已经存入并发送')
 
                 }else{
