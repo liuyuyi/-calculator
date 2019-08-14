@@ -58,8 +58,11 @@ const PriceModel = mongoose.model('newprice', PriceSchema);
 const Rule2 = new schedule.RecurrenceRule();
     Rule2.hour = [10,11,12,14];
     Rule2.minute = [00,30];
+
 (async () => {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+        args: ['--no-sandbox']
+    });
     const page = await browser.newPage();
     await page.goto(targetUrl);
     await page.screenshot({
@@ -73,6 +76,7 @@ const Rule2 = new schedule.RecurrenceRule();
     });
     await browser.close();
 })();
+
 schedule.scheduleJob(Rule2,  () =>{
 
     (async () => {
