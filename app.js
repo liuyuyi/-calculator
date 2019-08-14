@@ -66,7 +66,7 @@ schedule.scheduleJob(Rule2,  () =>{
         const page = await browser.newPage();
         await page.goto(targetUrl);
         await page.screenshot({
-            path: './public/images/example.jpg'
+            path: '/public/images/example.jpg'
         });
         await browser.close();
     })();
@@ -149,7 +149,7 @@ schedule.scheduleJob(Rule2,  () =>{
                 cid: 'img1'
             }]
             
-            send(mail);
+            // send(mail);
 
             // PriceModel.findOne({
             //     upDateTime: priceData.upDateTime
