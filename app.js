@@ -28,7 +28,7 @@ var mail = {
     // 主题
     subject: '铜铝价格',
     // 收件人
-    to: '339266478@qq.com',// 328826649
+    to: '328826649@qq.com',
     cc: '339266478@qq.com',
     // 邮件内容，HTML格式
     html: ''
@@ -56,33 +56,8 @@ const PriceSchema = {
 }
 const PriceModel = mongoose.model('newprice', PriceSchema);
 const Rule2 = new schedule.RecurrenceRule();
-    Rule2.hour = [10,11,12,15];
-    Rule2.minute = [00,30,10];
-(async () => {
-    const browser = await puppeteer.launch({
-        args: ['--no-sandbox', '--disable-setuid-sandbox']
-    });
-    const page = await browser.newPage();
-    await page.goto(targetUrl);
-    await page.screenshot({
-        path: './public/images/example.jpg',
-        clip: {
-            x: 0,
-            y: 0,
-            width: 800,
-            height: 500
-        }
-    });
-    await browser.close();
-    var img = fs.readFileSync('./public/images/example.jpg')
-    mail.attachments = [{
-        filename: '实时价格网站截图',
-        content: img,
-        cid: 'img1'
-    }];
-    mail.html = '<img src="cid:img1">'
-    send(mail);
-})();
+    Rule2.hour = [10,11,12,14];
+    Rule2.minute = [00,30];
 
 schedule.scheduleJob(Rule2,  () =>{
 
