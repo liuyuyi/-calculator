@@ -1,4 +1,4 @@
-// const mongoose = require('./db/mongooseDb')
+const mongoose = require('./db/mongooseDb')
 const express = require('express');
 const app = express();
 const https = require('https');
@@ -54,7 +54,7 @@ const PriceSchema = {
     upDateTime: { type: String },
     creatDate: { type: Number }
 }
-// const PriceModel = mongoose.model('newprice', PriceSchema);
+const PriceModel = mongoose.model('newprice', PriceSchema);
 const Rule2 = new schedule.RecurrenceRule();
     Rule2.hour = [10,11,12];
     Rule2.minute = [00,30];
