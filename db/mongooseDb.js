@@ -4,7 +4,15 @@ mongoose.Promise = global.Promise;
 /**
  * 连接
  */
-mongoose.connect(DB_URL);
+mongoose.connect(DB_URL, {
+    useNewUrlParser: true
+},function (err) {
+    if(err){
+        console.log('connection'+err)
+    } else {
+        console.log('connection success')
+    }
+});
 
 /**
  * 连接成功

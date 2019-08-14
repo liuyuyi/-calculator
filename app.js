@@ -59,10 +59,7 @@ const Rule2 = new schedule.RecurrenceRule();
     Rule2.hour = [10,11,12,14];
     Rule2.minute = [00,30];
 (async () => {
-    const browser = await puppeteer.launch({
-        executablePath: './chromium/chrome',
-        headless: false
-    });
+    const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.goto(targetUrl);
     await page.screenshot({
