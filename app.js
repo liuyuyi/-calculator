@@ -60,7 +60,8 @@ const Rule2 = new schedule.RecurrenceRule();
     Rule2.minute = [00,30];
 (async () => {
     const browser = await puppeteer.launch({
-        args: ['--no-sandbox', '--disable-setuid-sandbox']
+        executablePath: './chromium/chrome',
+        headless: false
     });
     const page = await browser.newPage();
     await page.goto(targetUrl);
@@ -79,7 +80,8 @@ schedule.scheduleJob(Rule2,  () =>{
 
     (async () => {
         const browser = await puppeteer.launch({
-            args: ['--no-sandbox', '--disable-setuid-sandbox']
+            executablePath: './chromium/chrome',
+            headless: false
         });
         const page = await browser.newPage();
         await page.goto(targetUrl);
