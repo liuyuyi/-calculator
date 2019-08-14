@@ -151,20 +151,21 @@ schedule.scheduleJob(Rule2,  () =>{
             
             // send(mail);
 
-            // PriceModel.findOne({
-            //     upDateTime: priceData.upDateTime
-            // },  (err, doc) =>{
+            PriceModel.findOne({
+                upDateTime: priceData.upDateTime
+            },  (err, doc) =>{
                 
-            //     if(doc === null){
+                if(doc === null){
 
-            //         var price = new PriceModel(priceData);
-            //         price.save();
+                    var price = new PriceModel(priceData);
+                    price.save();
+                    console.log('已经存入')
 
-            //     }else{
-            //         console.log('已经存在不保存')
-            //     }
+                }else{
+                    console.log('已经存在不保存')
+                }
 
-            // });
+            });
 
         });
 
