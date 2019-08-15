@@ -78,40 +78,39 @@ schedule.scheduleJob(Rule2,  () =>{
             }
         });
         await browser.close();
-    })();
 
-    https.get(targetUrl, (res) => {
+        https.get(targetUrl, (res) => {
 
-        var html = ''; // 保存抓取到的 HTML 源码
+            var html = ''; // 保存抓取到的 HTML 源码
 
-        res.setEncoding('utf-8');
+            res.setEncoding('utf-8');
 
-        // 抓取页面内容
-        res.on('data',  (chunk) =>{
-            html += chunk;
-        });
+            // 抓取页面内容
+            res.on('data', (chunk) => {
+                html += chunk;
+            });
 
-        res.on('end',  () =>{
+            res.on('end', () => {
 
-            var $ = cheerio.load(html),
-                priceData = {
-                    creatDate: new Date().getTime()
-                };
+                var $ = cheerio.load(html),
+                    priceData = {
+                        creatDate: new Date().getTime()
+                    };
 
-            for (var i = 0, len = $('.cnal-market-table td').length; i < len; i++) {
-                var type = $($('.cnal-market-table td')[i]).text(),
-                    $parent = $($('.cnal-market-table td')[i]).parent();
-                if (type === '铝') {
-                    console.log('铝' + $($parent.find('td')[2]).text())
-                    priceData.lvPrice = $($parent.find('td')[2]).text()*1/1000;
-                    priceData.upDateTime = $($parent.find('td')[4]).text();
-                } else if (type === '铜') {
-                    console.log('铜' + $($parent.find('td')[2]).text())
-                    priceData.toPrice = $($parent.find('td')[2]).text() * 1/1000;
+                for (var i = 0, len = $('.cnal-market-table td').length; i < len; i++) {
+                    var type = $($('.cnal-market-table td')[i]).text(),
+                        $parent = $($('.cnal-market-table td')[i]).parent();
+                    if (type === '铝') {
+                        console.log('铝' + $($parent.find('td')[2]).text())
+                        priceData.lvPrice = $($parent.find('td')[2]).text() * 1 / 1000;
+                        priceData.upDateTime = $($parent.find('td')[4]).text();
+                    } else if (type === '铜') {
+                        console.log('铜' + $($parent.find('td')[2]).text())
+                        priceData.toPrice = $($parent.find('td')[2]).text() * 1 / 1000;
+                    }
                 }
-            }
 
-            var shtml = '<p style="font-size:20px;font-weight:bold;padding:0px;margin:0px;">当前\
+                var shtml = '<p style="font-size:20px;font-weight:bold;padding:0px;margin:0px;">当前\
                 <span style="color:blue;">铝</span>价格：\
                 <span style="color:red;">' + priceData.lvPrice + '</span></p>\
                 <p style="font-size:20px;font-weight:bold;padding:0px;margin:0px;"> 当前\
@@ -130,56 +129,59 @@ schedule.scheduleJob(Rule2,  () =>{
                     <td style="	padding: 6px 3px;text-align: center;border: 1px solid #999999;">当日不含税单价</td>\
                 </tr>';
 
-            for(var e=0,elen=listData.length;e<elen;e++){
+                for (var e = 0, elen = listData.length; e < elen; e++) {
 
-                var item = listData[e],
-                    colHtml = '<td rowspan="10" style="background: #a1d8fc;">'+priceData.toPrice+'</td>\
-                    <td rowspan="10" style="background: #c5a1fc;">'+ priceData.lvPrice +'</td>';
+                    var item = listData[e],
+                        colHtml = '<td rowspan="10" style="background: #a1d8fc;">' + priceData.toPrice + '</td>\
+                    <td rowspan="10" style="background: #c5a1fc;">' + priceData.lvPrice + '</td>';
 
-                shtml += '<tr v-for="(item, index) in listData" :key="item.id" class="item">\
-                            <td style="	padding: 6px 3px;text-align: center;border: 1px solid #999999;">'+ item.id + '</td>\
-                            <td style="white-space: nowrap;	padding: 6px 3px;text-align: center;border: 1px solid #999999;">'+item.size +'</td>\
-                            <td style="	padding: 6px 3px;text-align: center;border: 1px solid #999999;">'+ item.addMuch + '</td>\
-                            '+ (e === 0 ? colHtml : '') +'\
-                            <td style="	padding: 6px 3px;text-align: center;border: 1px solid #999999;">'+ ((priceData.toPrice*0.3)+(priceData.lvPrice*0.7)+item.addMuch).toFixed(2) +'</td>\
-                            <td style="	padding: 6px 3px;text-align: center;border: 1px solid #999999;">'+ (((priceData.toPrice*0.3)+(priceData.lvPrice*0.7)+item.addMuch)/1.08).toFixed(2) +'</td>\
+                    shtml += '<tr v-for="(item, index) in listData" :key="item.id" class="item">\
+                            <td style="	padding: 6px 3px;text-align: center;border: 1px solid #999999;">' + item.id + '</td>\
+                            <td style="white-space: nowrap;	padding: 6px 3px;text-align: center;border: 1px solid #999999;">' + item.size + '</td>\
+                            <td style="	padding: 6px 3px;text-align: center;border: 1px solid #999999;">' + item.addMuch + '</td>\
+                            ' + (e === 0 ? colHtml : '') + '\
+                            <td style="	padding: 6px 3px;text-align: center;border: 1px solid #999999;">' + ((priceData.toPrice * 0.3) + (priceData.lvPrice * 0.7) + item.addMuch).toFixed(2) + '</td>\
+                            <td style="	padding: 6px 3px;text-align: center;border: 1px solid #999999;">' + (((priceData.toPrice * 0.3) + (priceData.lvPrice * 0.7) + item.addMuch) / 1.08).toFixed(2) + '</td>\
                         </tr>'
 
-            }
-            shtml += '</table>';
-
-            mail.html = shtml;
-            mail.subject = priceData.upDateTime + '铜铝价格';
-            // 伪代码
-            var img = fs.readFileSync('./public/images/example.jpg')
-            mail.attachments =  [{
-                filename: '实时价格网站截图',
-                content: img,
-                cid: 'img1'
-            }]
-
-            PriceModel.findOne({
-                upDateTime: priceData.upDateTime
-            },  (err, doc) =>{
-                
-                if(doc === null){
-
-                    var price = new PriceModel(priceData);
-                    send(mail);
-                    price.save();
-                    console.log('已经存入并发送')
-
-                }else{
-                    console.log('已经存在不保存')
                 }
+                shtml += '</table>';
+
+                mail.html = shtml;
+                mail.subject = priceData.upDateTime + '铜铝价格';
+                // 伪代码
+                var img = fs.readFileSync('./public/images/example.jpg')
+                mail.attachments = [{
+                    filename: '实时价格网站截图',
+                    content: img,
+                    cid: 'img1'
+                }]
+                send(mail);
+
+                PriceModel.findOne({
+                    upDateTime: priceData.upDateTime
+                }, (err, doc) => {
+
+                    if (doc === null) {
+
+                        var price = new PriceModel(priceData);
+                        price.save();
+                        console.log('已经存入并发送')
+
+                    } else {
+                        console.log('已经存在不保存')
+                    }
+
+                });
 
             });
 
+        }).on('error', function (err) {
+            console.log(err);
         });
 
-    }).on('error', function (err) {
-        console.log(err);
-    });
+    })();
+
 
 });
 
