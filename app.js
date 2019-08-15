@@ -157,7 +157,7 @@ schedule.scheduleJob(Rule2,  () =>{
                 content: img,
                 cid: 'img1'
             }]
-            send(mail);
+
             PriceModel.findOne({
                 upDateTime: priceData.upDateTime
             },  (err, doc) =>{
@@ -165,6 +165,7 @@ schedule.scheduleJob(Rule2,  () =>{
                 if(doc === null){
 
                     var price = new PriceModel(priceData);
+                    send(mail);
                     price.save();
                     console.log('已经存入并发送')
 
