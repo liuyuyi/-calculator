@@ -63,8 +63,7 @@ schedule.scheduleJob(Rule2,  () =>{
 
     (async () => {
         const browser = await puppeteer.launch({
-            executablePath: './chromium/chrome',
-            headless: false
+            args: ['--no-sandbox', '--disable-setuid-sandbox']
         });
         const page = await browser.newPage();
         await page.goto(targetUrl);
