@@ -10,13 +10,13 @@ const schedule = require('node-schedule');
 const targetUrl = 'https://m.cnal.com/market/changjiang/';
 // 截取网页生成图
 const puppeteer = require('puppeteer');
-// 创建一个SMTP客户端配置  xhodgaqyxlcebibg
+// 创建一个SMTP客户端配置  zjoqmhwrfxlncadf
 const config = {
     host: 'smtp.qq.com', //网易163邮箱 smtp.163.com
     port: 465, //网易邮箱端口 25
     auth: {
         user: '339266478@qq.com', //邮箱账号
-        pass: 'xhodgaqyxlcebibg' //邮箱的授权码
+        pass: 'zjoqmhwrfxlncadf' //邮箱的授权码
     }
 };
 // 创建一个SMTP客户端对象
