@@ -56,10 +56,12 @@ const PriceSchema = {
 }
 const PriceModel = mongoose.model('newprice', PriceSchema);
 const Rule2 = new schedule.RecurrenceRule();
-    Rule2.hour = [10,11,12,14];
+    Rule2.hour = [10,11,12];
     Rule2.minute = [00,30];
 
 schedule.scheduleJob(Rule2,  () =>{
+
+    fs.unlinkSync('./public/images/example.jpg');
 
     (async () => {
         const browser = await puppeteer.launch({
@@ -180,7 +182,6 @@ schedule.scheduleJob(Rule2,  () =>{
         });
 
     })();
-
 
 });
 
