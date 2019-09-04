@@ -61,8 +61,6 @@ const Rule2 = new schedule.RecurrenceRule();
 
 schedule.scheduleJob(Rule2,  () =>{
 
-    fs.unlinkSync('./public/images/example.jpg');
-
     (async () => {
         const browser = await puppeteer.launch({
             args: ['--no-sandbox', '--disable-setuid-sandbox']
@@ -168,6 +166,9 @@ schedule.scheduleJob(Rule2,  () =>{
                         price.save();
                         send(mail);
                         console.log('已经存入并发送')
+                        setTimeout(() => {
+                            fs.unlinkSync('./public/images/example.jpg');
+                        }, 2000);
 
                     } else {
                         console.log('已经存在不保存')
