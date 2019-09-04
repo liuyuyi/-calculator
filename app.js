@@ -3,7 +3,7 @@ const express = require('express');
 const app = express();
 const https = require('https');
 const fs = require('fs');
-const path = require('path');
+// const path = require('path');
 const cheerio = require('cheerio');
 const nodemailer = require('nodemailer');
 const schedule = require('node-schedule');
@@ -60,8 +60,6 @@ const Rule2 = new schedule.RecurrenceRule();
     Rule2.minute = [00,30];
 
 schedule.scheduleJob(Rule2,  () =>{
-
-    fs.unlinkSync('./public/images/example.jpg');
 
     (async () => {
         const browser = await puppeteer.launch({
@@ -168,6 +166,9 @@ schedule.scheduleJob(Rule2,  () =>{
                         price.save();
                         send(mail);
                         console.log('已经存入并发送')
+                        setTimeout(() => {
+                            fs.unlinkSync('./public/images/example.jpg');
+                        }, 2000);
 
                     } else {
                         console.log('已经存在不保存')
