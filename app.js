@@ -57,7 +57,7 @@ const PriceSchema = {
 }
 const PriceModeldb = mongoose.model('newprice', PriceSchema);
 const Rule2 = new schedule.RecurrenceRule();
-    Rule2.hour = [9,10,11,17];
+    Rule2.hour = [9,10,11];
     Rule2.minute = [00,30,41,42,43];
 
 schedule.scheduleJob(Rule2,  () =>{
@@ -168,10 +168,10 @@ schedule.scheduleJob(Rule2,  () =>{
                     console.log('已经改为true')
                 }
 
-                PriceModeldb.findOne({
-                    upDateTime: priceData.upDateTime
-                }, (err, doc) => {
-                    if (doc === null) {
+                // PriceModeldb.findOne({
+                //     upDateTime: priceData.upDateTime
+                // }, (err, doc) => {
+                //     if (doc === null) {
 
                         var price = new PriceModel(priceData);
                         price.save();
@@ -181,11 +181,11 @@ schedule.scheduleJob(Rule2,  () =>{
                             fs.unlinkSync('./public/images/example.jpg');
                         }, 2000);
 
-                    } else {
-                        console.log('已经存在不保存')
-                    }
+                //     } else {
+                //         console.log('已经存在不保存')
+                //     }
 
-                });
+                // });
 
             });
 
