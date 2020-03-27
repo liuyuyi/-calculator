@@ -10,13 +10,13 @@ const schedule = require('node-schedule');
 const targetUrl = 'https://m.cnal.com/market/changjiang/';
 // 截取网页生成图
 const puppeteer = require('puppeteer');
-// 创建一个SMTP客户端配置  zjoqmhwrfxlncadf
+// 创建一个SMTP客户端配置  ytkwuiybbzmcbgei
 const config = {
     host: 'smtp.qq.com', //网易163邮箱 smtp.163.com
     port: 465, //网易邮箱端口 25
     auth: {
         user: '339266478@qq.com', //邮箱账号
-        pass: 'zjoqmhwrfxlncadf' //邮箱的授权码
+        pass: 'ytkwuiybbzmcbgei' //邮箱的授权码
     }
 };
 // 创建一个SMTP客户端对象
@@ -33,16 +33,17 @@ var mail = {
     // 邮件内容，HTML格式
     html: ''
 };
-var listData = [{id: 1, size: '0.10-0.11', addMuch: 26.16},
-{ id: 2, size: '0.12-0.13', addMuch: 24.11 },
-{ id: 3, size: '0.14-0.15', addMuch: 18.56 },
-{ id: 4, size: '0.16-0.17', addMuch: 17.31 },
-{ id: 6, size: '0.18-0.19', addMuch: 16.76 },
-{ id: 7, size: '0.20-0.24', addMuch: 13.83 },
-{ id: 8, size: '0.25-0.29', addMuch: 13.33 },
-{ id: 9, size: '0.30-0.39', addMuch: 13.26 },
-{ id: 10, size: '0.40-0.49', addMuch: 12.80 },
-{ id: 11, size: '0.50-1.30', addMuch: 12.40 }];
+var listData = [{id: 1, size: '0.10', addMuch: 25.50},
+{ id: 2, size: '0.11', addMuch: 24.50 },
+{ id: 3, size: '0.12', addMuch: 21.00 },
+{ id: 4, size: '0.13', addMuch: 20.00 },
+{ id: 5, size: '0.14-0.15', addMuch: 16.00 },
+{ id: 6, size: '0.16-0.17', addMuch: 15.00 },
+{ id: 7, size: '0.18-0.19', addMuch: 14.50 },
+{ id: 8, size: '0.20-0.24', addMuch: 13.50 },
+{ id: 9, size: '0.25-0.29', addMuch: 13.00 },
+{ id: 10, size: '0.30-0.39', addMuch: 12.50 },
+{ id: 11, size: '0.40-1.3', addMuch: 12.00 }];
 /*  数据库连接  */
 const PriceSchema = {
     toPrice: { // 铜
@@ -56,7 +57,7 @@ const PriceSchema = {
 }
 const PriceModel = mongoose.model('newprice', PriceSchema);
 const Rule2 = new schedule.RecurrenceRule();
-    Rule2.hour = [10,11,12];
+    Rule2.hour = [9,10,11,12];
     Rule2.minute = [00,30];
 
 schedule.scheduleJob(Rule2,  () =>{
@@ -131,8 +132,8 @@ schedule.scheduleJob(Rule2,  () =>{
                 for (var e = 0, elen = listData.length; e < elen; e++) {
 
                     var item = listData[e],
-                        colHtml = '<td rowspan="10" style="background: #a1d8fc;">' + priceData.toPrice + '</td>\
-                    <td rowspan="10" style="background: #c5a1fc;">' + priceData.lvPrice + '</td>';
+                        colHtml = '<td rowspan="11" style="background: #a1d8fc;">' + priceData.toPrice + '</td>\
+                    <td rowspan="11" style="background: #c5a1fc;">' + priceData.lvPrice + '</td>';
 
                     shtml += '<tr v-for="(item, index) in listData" :key="item.id" class="item">\
                             <td style="	padding: 6px 3px;text-align: center;border: 1px solid #999999;">' + item.id + '</td>\
@@ -155,11 +156,11 @@ schedule.scheduleJob(Rule2,  () =>{
                     content: img,
                     cid: 'img1'
                 }]
-
+               
                 PriceModel.findOne({
                     upDateTime: priceData.upDateTime
                 }, (err, doc) => {
-
+                    console.log(发送邮件)
                     if (doc === null) {
 
                         var price = new PriceModel(priceData);
