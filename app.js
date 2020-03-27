@@ -57,10 +57,12 @@ const PriceSchema = {
 }
 const PriceModel = mongoose.model('newprice', PriceSchema);
 const Rule2 = new schedule.RecurrenceRule();
-    Rule2.hour = [9,10,11,12];
-    Rule2.minute = [00,30];
+    Rule2.hour = [9,10,11,17];
+    Rule2.minute = [00,30,41,42,43];
 
 schedule.scheduleJob(Rule2,  () =>{
+
+    const sendto = false;
 
     (async () => {
         const browser = await puppeteer.launch({
@@ -96,6 +98,8 @@ schedule.scheduleJob(Rule2,  () =>{
                     priceData = {
                         creatDate: new Date().getTime()
                     };
+                    
+                // const PriceModel = mongoose.model('newprice', PriceSchema);
 
                 for (var i = 0, len = $('.cnal-market-table td').length; i < len; i++) {
                     var type = $($('.cnal-market-table td')[i]).text(),
@@ -156,11 +160,18 @@ schedule.scheduleJob(Rule2,  () =>{
                     content: img,
                     cid: 'img1'
                 }]
-               
-                PriceModel.findOne({
+                
+                if(sendto){
+                    sendto = false;
+                    console.log('已经改为false')
+                }else{
+                    sendto = true;
+                    console.log('已经改为true')
+                }
+
+                mongoose.model('newprice', PriceSchema).findOne({
                     upDateTime: priceData.upDateTime
                 }, (err, doc) => {
-                    console.log(发送邮件)
                     if (doc === null) {
 
                         var price = new PriceModel(priceData);
