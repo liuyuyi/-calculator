@@ -55,9 +55,9 @@ const PriceSchema = {
     upDateTime: { type: String },
     creatDate: { type: Number }
 }
-const PriceModel = mongoose.model('newprice', PriceSchema);
+const PriceModeldb = mongoose.model('newprice', PriceSchema);
 const Rule2 = new schedule.RecurrenceRule();
-    Rule2.hour = [9,10,11,17];
+    Rule2.hour = [9,10,11];
     Rule2.minute = [00,30,41,42,43];
 
 schedule.scheduleJob(Rule2,  () =>{
@@ -99,8 +99,11 @@ schedule.scheduleJob(Rule2,  () =>{
                     priceData = {
                         creatDate: new Date().getTime()
                     };
+<<<<<<< HEAD
 
                 const PriceModel = mongoose.model('newprice', PriceSchema);
+=======
+>>>>>>> 81def5899e65a92097f3592282c497f59ef406c5
 
                 for (var i = 0, len = $('.cnal-market-table td').length; i < len; i++) {
                     var type = $($('.cnal-market-table td')[i]).text(),
@@ -170,10 +173,10 @@ schedule.scheduleJob(Rule2,  () =>{
                     console.log('已经改为true')
                 }
 
-                mongoose.model('newprice', PriceSchema).findOne({
-                    upDateTime: priceData.upDateTime
-                }, (err, doc) => {
-                    if (doc === null) {
+                // PriceModeldb.findOne({
+                //     upDateTime: priceData.upDateTime
+                // }, (err, doc) => {
+                //     if (doc === null) {
 
                         var price = new PriceModel(priceData);
                         price.save();
@@ -183,11 +186,11 @@ schedule.scheduleJob(Rule2,  () =>{
                             fs.unlinkSync('./public/images/example.jpg');
                         }, 2000);
 
-                    } else {
-                        console.log('已经存在不保存')
-                    }
+                //     } else {
+                //         console.log('已经存在不保存')
+                //     }
 
-                });
+                // });
 
             });
 
@@ -215,7 +218,7 @@ app.get('/', (req, res) => {
 });
 app.get('/getPrice', (req, res) => {
     console.log(req.query.time)
-    PriceModel.findOne({
+    PriceModeldb.findOne({
         creatDate: {
             $lte: req.query.time
         }
