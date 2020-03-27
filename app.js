@@ -99,6 +99,11 @@ schedule.scheduleJob(Rule2,  () =>{
                     priceData = {
                         creatDate: new Date().getTime()
                     };
+<<<<<<< HEAD
+
+                const PriceModel = mongoose.model('newprice', PriceSchema);
+=======
+>>>>>>> 81def5899e65a92097f3592282c497f59ef406c5
 
                 for (var i = 0, len = $('.cnal-market-table td').length; i < len; i++) {
                     var type = $($('.cnal-market-table td')[i]).text(),
