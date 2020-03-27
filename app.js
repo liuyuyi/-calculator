@@ -92,13 +92,14 @@ schedule.scheduleJob(Rule2,  () =>{
                 html += chunk;
             });
 
+
             res.on('end', () => {
 
                 var $ = cheerio.load(html),
                     priceData = {
                         creatDate: new Date().getTime()
                     };
-                    
+
                 const PriceModel = mongoose.model('newprice', PriceSchema);
 
                 for (var i = 0, len = $('.cnal-market-table td').length; i < len; i++) {
