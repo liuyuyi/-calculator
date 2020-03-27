@@ -55,7 +55,7 @@ const PriceSchema = {
     upDateTime: { type: String },
     creatDate: { type: Number }
 }
-const PriceModel = mongoose.model('newprice', PriceSchema);
+const PriceModeldb = mongoose.model('newprice', PriceSchema);
 const Rule2 = new schedule.RecurrenceRule();
     Rule2.hour = [9,10,11,17];
     Rule2.minute = [00,30,41,42,43];
@@ -99,8 +99,6 @@ schedule.scheduleJob(Rule2,  () =>{
                     priceData = {
                         creatDate: new Date().getTime()
                     };
-
-                const PriceModel = mongoose.model('newprice', PriceSchema);
 
                 for (var i = 0, len = $('.cnal-market-table td').length; i < len; i++) {
                     var type = $($('.cnal-market-table td')[i]).text(),
@@ -170,7 +168,7 @@ schedule.scheduleJob(Rule2,  () =>{
                     console.log('已经改为true')
                 }
 
-                mongoose.model('newprice', PriceSchema).findOne({
+                PriceModeldb.findOne({
                     upDateTime: priceData.upDateTime
                 }, (err, doc) => {
                     if (doc === null) {
@@ -215,7 +213,7 @@ app.get('/', (req, res) => {
 });
 app.get('/getPrice', (req, res) => {
     console.log(req.query.time)
-    PriceModel.findOne({
+    PriceModeldb.findOne({
         creatDate: {
             $lte: req.query.time
         }
