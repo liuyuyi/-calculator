@@ -165,7 +165,7 @@ schedule.scheduleJob(Rule2,  () =>{
                  }, (err, doc) => {
                      if (doc === null) {
 
-                        var price = new PriceModel(priceData);
+                        var price = new PriceModeldb(priceData);
                         price.save();
                         send(mail);
                         console.log('已经存入并发送')
