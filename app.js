@@ -99,11 +99,6 @@ schedule.scheduleJob(Rule2,  () =>{
                     priceData = {
                         creatDate: new Date().getTime()
                     };
-<<<<<<< HEAD
-
-                const PriceModel = mongoose.model('newprice', PriceSchema);
-=======
->>>>>>> 81def5899e65a92097f3592282c497f59ef406c5
 
                 for (var i = 0, len = $('.cnal-market-table td').length; i < len; i++) {
                     var type = $($('.cnal-market-table td')[i]).text(),
@@ -164,19 +159,11 @@ schedule.scheduleJob(Rule2,  () =>{
                     content: img,
                     cid: 'img1'
                 }]
-                
-                if(sendto){
-                    sendto = false;
-                    console.log('已经改为false')
-                }else{
-                    sendto = true;
-                    console.log('已经改为true')
-                }
 
-                // PriceModeldb.findOne({
-                //     upDateTime: priceData.upDateTime
-                // }, (err, doc) => {
-                //     if (doc === null) {
+                 PriceModeldb.findOne({
+                     upDateTime: priceData.upDateTime
+                 }, (err, doc) => {
+                     if (doc === null) {
 
                         var price = new PriceModel(priceData);
                         price.save();
@@ -186,11 +173,11 @@ schedule.scheduleJob(Rule2,  () =>{
                             fs.unlinkSync('./public/images/example.jpg');
                         }, 2000);
 
-                //     } else {
-                //         console.log('已经存在不保存')
-                //     }
+                     } else {
+                         console.log('已经存在不保存')
+                     }
 
-                // });
+                 });
 
             });
 
