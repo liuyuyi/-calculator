@@ -78,8 +78,8 @@
 					<td>{{item.id}}</td>
 					<td style="white-space: nowrap;">{{item.size}}</td>
 					<td>{{item.addMuch}}</td>
-					<td rowspan="10" v-show="index === 0 ? true : false" style="background: #a1d8fc;">{{tongPrice}}</td>
-					<td rowspan="10" v-show="index === 0 ? true : false" style="background: #c5a1fc;">{{lvPrice}}</td>
+					<td rowspan="11" v-show="index === 0 ? true : false" style="background: #a1d8fc;">{{tongPrice}}</td>
+					<td rowspan="11" v-show="index === 0 ? true : false" style="background: #c5a1fc;">{{lvPrice}}</td>
 					<td>{{ ((tongPrice*0.3)+(lvPrice*0.7)+item.addMuch).toFixed(2) }}</td>
 					<td>{{ (((tongPrice*0.3)+(lvPrice*0.7)+item.addMuch)/1.08).toFixed(2) }}</td>
 				</tr>
@@ -128,8 +128,8 @@
 				    // handle success
 					console.log(response.data);
 					if(response.data){
-						this.tongPrice = response.data.toPrice/1000;
-						this.lvPrice = response.data.lvPrice/1000;
+						this.tongPrice = response.data.toPrice;
+						this.lvPrice = response.data.lvPrice;
 					}
 				  })
 				  .catch(function (error) {
