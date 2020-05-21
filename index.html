@@ -6,6 +6,7 @@
 	<title>价格计算器</title>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script src="./public/js/moment.min.js"></script>
 
 	<style>
 		table{
@@ -55,6 +56,9 @@
 			</div>
 		</div>
 		<div v-show="showPrice">
+			<div style="font-size: 25px;color:green;margin: 10px 0px;">
+				当前价格更新时间: {{dateTime}}
+			</div>
 			<div style="color:red;margin-bottom:10px;">
 				公式：当日（铜价*0.3）+（铝价*0.7）+加工费
 			</div>
@@ -113,7 +117,8 @@
 				tongPrice: 0,
 				lvPrice: 0,
 				showPrice: true,
-				pcShow: false
+				pcShow: false,
+				dateTime: ''
 			},
 			created() {
 
@@ -130,6 +135,7 @@
 					if(response.data){
 						this.tongPrice = response.data.toPrice;
 						this.lvPrice = response.data.lvPrice;
+						this.dateTime = response.data.upDateTime
 					}
 				  })
 				  .catch(function (error) {

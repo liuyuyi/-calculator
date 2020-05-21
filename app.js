@@ -204,14 +204,14 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + "/" + "index.html");
 });
 app.get('/getPrice', (req, res) => {
-    console.log(req.query.time)
-    PriceModeldb.findOne({
-        creatDate: {
-            $lte: req.query.time
-        }
+
+    PriceModeldb.find({
+        // creatDate: {
+        //     $lt: req.query.time
+        // }
     }, function (err, doc) {
-        res.end(JSON.stringify(doc));
-    });
+        res.end(JSON.stringify(doc[0]));
+    }).sort({_id: -1}).limit(1);
 });
 
 var server = app.listen(3000, () =>{
