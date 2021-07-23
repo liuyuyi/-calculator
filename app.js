@@ -1,21 +1,21 @@
-const mongoose = require('./db/mongooseDb')
-const express = require('express');
+const mongoose = require("./db/mongooseDb");
+const express = require("express");
 const app = express();
-const https = require('https');
-const fs = require('fs');
+const https = require("https");
+const fs = require("fs");
 // const path = require('path');
-const cheerio = require('cheerio');
-const nodemailer = require('nodemailer');
-const schedule = require('node-schedule');
-const targetUrl = 'https://m.cnal.com/market/changjiang/';
-const puppeteer = require('puppeteer');
+const cheerio = require("cheerio");
+const nodemailer = require("nodemailer");
+const schedule = require("node-schedule");
+const targetUrl = "https://m.cnal.com/market/changjiang/";
+const puppeteer = require("puppeteer");
 // 创建一个SMTP客户端配置  ytkwuiybbzmcbgei
 const config = {
-    host: 'smtp.qq.com', //网易163邮箱 smtp.163.com
+    host: "smtp.qq.com", //网易163邮箱 smtp.163.com
     port: 465, //网易邮箱端口 25
     auth: {
-        user: '339266478@qq.com', //邮箱账号
-        pass: 'aybtlnprkprhcafc' //邮箱的授权码
+        user: "339266478@qq.com", //邮箱账号
+        pass: "aybtlnprkprhcafc" //邮箱的授权码
     }
 };
 // 创建一个SMTP客户端对象
@@ -23,26 +23,72 @@ const transporter = nodemailer.createTransport(config);
 // 创建一个邮件对象
 const mail = {
     // 发件人
-    from: '<339266478@qq.com>',
+    from: "<339266478@qq.com>",
     // 主题
-    subject: '铜铝价格',
+    subject: "铜铝价格",
     // 收件人
-    // to: '328826649@qq.com',
-    cc: '339266478@qq.com',
+    to: '328826649@qq.com',
+    cc: "339266478@qq.com",
     // 邮件内容，HTML格式
-    html: ''
+    html: ""
 };
-const listData = [{id: 1, size: '0.10', addMuch: 25.50},
-                { id: 2, size: '0.11', addMuch: 24.50 },
-                { id: 3, size: '0.12', addMuch: 21.00 },
-                { id: 4, size: '0.13', addMuch: 20.00 },
-                { id: 5, size: '0.14-0.15', addMuch: 16.00 },
-                { id: 6, size: '0.16-0.17', addMuch: 15.00 },
-                { id: 7, size: '0.18-0.19', addMuch: 14.50 },
-                { id: 8, size: '0.20-0.24', addMuch: 13.50 },
-                { id: 9, size: '0.25-0.29', addMuch: 13.00 },
-                { id: 10, size: '0.30-0.39', addMuch: 12.50 },
-                { id: 11, size: '0.40-1.3', addMuch: 12.00 }];
+const listData = [
+    {
+        id: 1,
+        size: "0.10",
+        addMuch: 25.5
+    },
+    {
+        id: 2,
+        size: "0.11",
+        addMuch: 24.5
+    },
+    {
+        id: 3,
+        size: "0.12",
+        addMuch: 21.0
+    },
+    {
+        id: 4,
+        size: "0.13",
+        addMuch: 20.0
+    },
+    {
+        id: 5,
+        size: "0.14-0.15",
+        addMuch: 16.0
+    },
+    {
+        id: 6,
+        size: "0.16-0.17",
+        addMuch: 15.0
+    },
+    {
+        id: 7,
+        size: "0.18-0.19",
+        addMuch: 14.5
+    },
+    {
+        id: 8,
+        size: "0.20-0.24",
+        addMuch: 13.5
+    },
+    {
+        id: 9,
+        size: "0.25-0.29",
+        addMuch: 13.0
+    },
+    {
+        id: 10,
+        size: "0.30-0.39",
+        addMuch: 12.5
+    },
+    {
+        id: 11,
+        size: "0.40-1.3",
+        addMuch: 12.0
+    }
+];
 const dataParams = {
     type: {
         type: Number
@@ -57,27 +103,26 @@ const dataParams = {
         type: Number
     }
 };
-// 铜 
-const PriceCopperdb = mongoose.model('coppers', dataParams);
+// 铜
+const PriceCopperdb = mongoose.model("coppers", dataParams);
 // 铝
-const PriceAluminumsdb = mongoose.model('aluminums', dataParams);
+const PriceAluminumsdb = mongoose.model("aluminums", dataParams);
 
 // 定时器
 const Rule2 = new schedule.RecurrenceRule();
-Rule2.hour = [9,10,11];
-Rule2.minute = [00,30];
+Rule2.hour = [9, 10, 11];
+Rule2.minute = [00, 30];
 
-schedule.scheduleJob(Rule2,  () =>{
-
+schedule.scheduleJob(Rule2, () => {
     (async () => {
         const browser = await puppeteer.launch({
-            args: ['--no-sandbox', '--disable-setuid-sandbox']
+            args: ["--no-sandbox", "--disable-setuid-sandbox"]
         });
         const page = await browser.newPage();
         await page.goto(targetUrl);
         await page.screenshot({
-            path: './public/images/example.jpg',
-            clip:{
+            path: "./public/images/example.jpg",
+            clip: {
                 x: 0,
                 y: 0,
                 width: 800,
@@ -86,47 +131,48 @@ schedule.scheduleJob(Rule2,  () =>{
         });
         await browser.close();
 
-        https.get(targetUrl, (res) => {
+        https
+            .get(targetUrl, res => {
+                var html = ""; // 保存抓取到的 HTML 源码
 
-            var html = ''; // 保存抓取到的 HTML 源码
+                res.setEncoding("utf-8");
 
-            res.setEncoding('utf-8');
+                // 抓取页面内容
+                res.on("data", chunk => {
+                    html += chunk;
+                });
 
-            // 抓取页面内容
-            res.on('data', (chunk) => {
-                html += chunk;
-            });
+                res.on("end", () => {
+                    let $ = cheerio.load(html),
+                        priceData = {
+                            creatDate: new Date().getTime()
+                        },
+                        copper = {},
+                        aluminum = {};
 
-            res.on('end', () => {
+                    for (
+                        let i = 0, len = $(".cnal-market-table td").length;
+                        i < len;
+                        i++
+                    ) {
+                        let type = $($(".cnal-market-table td")[i]).text(),
+                            $parent = $($(".cnal-market-table td")[i]).parent();
 
-                let $ = cheerio.load(html),
-                    priceData = {
-                        creatDate: new Date().getTime()
-                    },
-                    copper = {},
-                    aluminum = {};
+                        if (type === "铝") {
+                            aluminum.price = ($($parent.find("td")[2]).text() * 1) / 1000;
+                            aluminum.type = 0;
+                        } else if (type === "铜") {
+                            copper.price = ($($parent.find("td")[2]).text() * 1) / 1000;
+                            copper.type = 1;
+                        }
 
-                for (let i = 0, len = $('.cnal-market-table td').length; i < len; i++) {
-
-                    let type = $($('.cnal-market-table td')[i]).text(),
-                        $parent = $($('.cnal-market-table td')[i]).parent();
-
-                    if (type === '铝') {
-                        aluminum.price = $($parent.find('td')[2]).text() * 1 / 1000;
-                        aluminum.type = 0;
-                    } else if (type === '铜') {
-                        copper.price = $($parent.find('td')[2]).text() * 1 / 1000;
-                        copper.type = 1;
+                        priceData.upDateTime = $($parent.find("td")[4]).text();
                     }
 
-                    priceData.upDateTime = $($parent.find('td')[4]).text();
+                    let { price: coPrice } = copper;
+                    let { price: alPrice } = aluminum;
 
-                }
-
-                let { price:coPrice } = copper;
-                let { price:alPrice } = aluminum;
-
-                let shtml = `<p style="font-size:20px;font-weight:bold;padding:0px;margin:0px;">当前
+                    let shtml = `<p style="font-size:20px;font-weight:bold;padding:0px;margin:0px;">当前
                                 <span style="color:blue;">铝</span>价格：
                                 <span style="color:red;">${alPrice}</span></p> 
                                 <p style="font-size:20px;font-weight:bold;padding:0px;margin:0px;"> 当前
@@ -151,79 +197,87 @@ schedule.scheduleJob(Rule2,  () =>{
                                     border: 1px solid #999999;">当日不含税单价</td>
                                 </tr>`;
 
-                for (let e = 0, elen = listData.length; e < elen; e++) {
-
-                    let item = listData[e],
-                        colHtml = `<td rowspan="11" style="background: #a1d8fc;">${coPrice}</td>
+                    for (let e = 0, elen = listData.length; e < elen; e++) {
+                        let item = listData[e],
+                            colHtml = `<td rowspan="11" style="background: #a1d8fc;">${coPrice}</td>
                         <td rowspan="11" style="background: #c5a1fc;">${alPrice}</td>`;
-                    let { id, size, addMuch } = item;
+                        let { id, size, addMuch } = item;
 
-                    shtml += `<tr class="item">
+                        shtml += `<tr class="item">
                                 <td style="	padding: 6px 3px;text-align: center;border: 1px solid #999999;">${id}</td>
                                 <td style="white-space: nowrap;	padding: 6px 3px;text-align: center;border: 1px solid #999999;">${size}</td>
                                 <td style="	padding: 6px 3px;text-align: center;border: 1px solid #999999;">${addMuch}</td>
-                                ${(e === 0 ? colHtml : '')}
+                                ${e === 0 ? colHtml : ""}
                                 <td style="	padding: 6px 3px;text-align: center;
-                                border: 1 px solid #999999;">${((coPrice * 0.3) + (alPrice * 0.7) + item.addMuch).toFixed(2)}</td>
+                                border: 1 px solid #999999;">${(
+                                coPrice * 0.3 +
+                                alPrice * 0.7 +
+                                item.addMuch
+                            ).toFixed(2)}</td>
                                 <td style="	padding: 6px 3px;text-align: center;\
-                                border: 1 px solid #999999;">${(((coPrice * 0.3) + (alPrice * 0.7) + item.addMuch) / 1.08).toFixed(2)}</td>
+                                border: 1 px solid #999999;">${(
+                                (coPrice * 0.3 +
+                                    alPrice * 0.7 +
+                                    item.addMuch) /
+                                1.08
+                            ).toFixed(2)}</td>
                             </tr>`;
-
-                }
-                shtml += '</table><p style="float: left"><img src="cid:img1"></p>';
-
-                mail.html = shtml;
-                mail.subject = priceData.upDateTime + '铜铝价格';
-                // 伪代码
-                let img = fs.readFileSync('./public/images/example.jpg');
-
-                mail.attachments = [{
-                    filename: '实时价格网站截图',
-                    content: img,
-                    cid: 'img1'
-                }];
-
-                // 铜价格保存
-                PriceCopperdb.findOne({
-                    upDateTime: priceData.upDateTime
-                }, (err, doc) => {
-                     
-                    if (doc === null) {
-
-                        let coPriceDb = new PriceCopperdb(Object.assign(copper, priceData));
-                        coPriceDb.save();
-
                     }
+                    shtml += '</table><p style="float: left"><img src="cid:img1"></p>';
 
+                    mail.html = shtml;
+                    mail.subject = priceData.upDateTime + "铜铝价格";
+                    // 伪代码
+                    let img = fs.readFileSync("./public/images/example.jpg");
+
+                    mail.attachments = [
+                        {
+                            filename: "实时价格网站截图",
+                            content: img,
+                            cid: "img1"
+                        }
+                    ];
+
+                    // 铜价格保存
+                    PriceCopperdb.findOne(
+                        {
+                            upDateTime: priceData.upDateTime
+                        },
+                        (err, doc) => {
+                            if (doc === null) {
+                                let coPriceDb = new PriceCopperdb(
+                                    Object.assign(copper, priceData)
+                                );
+                                coPriceDb.save();
+                            }
+                        }
+                    );
+
+                    // 铝价格保存
+                    PriceAluminumsdb.findOne(
+                        {
+                            upDateTime: priceData.upDateTime
+                        },
+                        (err, doc) => {
+                            if (doc === null) {
+                                let alPriceDb = new PriceAluminumsdb(
+                                    Object.assign(aluminum, priceData)
+                                );
+                                alPriceDb.save();
+
+                                send(mail);
+                                setTimeout(() => {
+                                    fs.unlinkSync("./public/images/example.jpg");
+                                }, 2000);
+                            }
+                        }
+                    );
                 });
-
-                // 铝价格保存
-                PriceAluminumsdb.findOne({
-                    upDateTime: priceData.upDateTime
-                }, (err, doc) => {
-
-                    if (doc === null) {
-
-                        let alPriceDb = new PriceAluminumsdb(Object.assign(aluminum, priceData));
-                        alPriceDb.save();
-
-                        send(mail);
-                        setTimeout(() => {
-                            fs.unlinkSync('./public/images/example.jpg');
-                        }, 2000);
-
-                    }
-
-                });
-
+            })
+            .on("error", function (err) {
+                console.log(err);
             });
-
-        }).on('error', function (err) {
-            console.log(err);
-        });
-
     })();
-
 });
 
 // 发送邮件
@@ -234,7 +288,7 @@ function send(mail) {
         }
         // console.log('mail sent:', info.response);
     });
-};
+}
 
 // app.use('/public', express.static('public'));
 // app.get('/', (req, res) => {
@@ -252,15 +306,15 @@ function send(mail) {
 // });
 
 // app.get('/getPriceAll', (req, res) => {
-    
+
 //     const params = req.query;
 //     const query = PriceModeldb.find({});
-    
+
 //     let num = params.pageSize*1 || 10;        // 每页几条
-//     let total = 0;                            // 总数        
+//     let total = 0;                            // 总数
 //     let skip = (params.pageNo*1-1) * num;     // 页数*条数
 //     let lastPageNum = 0;
-   
+
 //     PriceModeldb.find({
 //         // creatDate: {
 //         //     $lt: req.query.time
@@ -307,7 +361,6 @@ function send(mail) {
 //     console.log("应用实例，访问地址为 http://%s:%s", host, port)
 
 // });
-
 
 // 截取网页生成图
 // #依赖库

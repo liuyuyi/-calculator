@@ -1,5 +1,9 @@
 const mongoose = require('mongoose');
+<<<<<<< HEAD
 
+=======
+// var DB_URL = 'mongodb://price:Liuyuyi1989@106.75.171.205:27017/price';
+>>>>>>> 15c43821d99f99f3b182cde5c4dba3eadb3da266
 var DB_URL = 'mongodb://price:Liuyuyi1989@localhost:27017/price';
 // var DB_URL = 'mongodb://localhost:27017/runoob';
 mongoose.Promise = global.Promise;
