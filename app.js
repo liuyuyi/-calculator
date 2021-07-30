@@ -35,58 +35,81 @@ const mail = {
 const listData = [
     {
         id: 1,
-        size: "0.10",
-        addMuch: 25.5
+        size: "0.08",
+        addMuch: 45,
+        plating: 0,
     },
     {
         id: 2,
-        size: "0.11",
-        addMuch: 24.5
+        size: "0.09",
+        addMuch: 40,
+        plating: 0,
     },
     {
         id: 3,
+        size: "0.10",
+        addMuch: 25.5,
+        plating: 0,
+    },
+    {
+        id: 4,
+        size: "0.11",
+        addMuch: 24.5,
+        plating: 0,
+    },
+    {
+        id: 5,
         size: "0.12",
-        addMuch: 21.0
+        addMuch: 21.0,
+        plating: 0,
     },
     {
         id: 4,
         size: "0.13",
-        addMuch: 20.0
+        addMuch: 20.0,
+        plating: 0,
     },
     {
         id: 5,
         size: "0.14-0.15",
-        addMuch: 16.0
+        addMuch: 16.0,
+        plating: 0,
     },
     {
         id: 6,
         size: "0.16-0.17",
-        addMuch: 15.0
+        addMuch: 15.0,
+        plating: 0,
     },
     {
         id: 7,
         size: "0.18-0.19",
-        addMuch: 14.5
+        addMuch: 14.5,
+        plating: 21.00,
     },
     {
         id: 8,
         size: "0.20-0.24",
-        addMuch: 13.5
+        addMuch: 13.5,
+        plating: 19.00,
     },
     {
         id: 9,
         size: "0.25-0.29",
-        addMuch: 13.0
+        addMuch: 13.0,
+        plating: 18.00,
     },
     {
         id: 10,
         size: "0.30-0.39",
-        addMuch: 12.5
+        addMuch: 12.5,
+        plating: 17.50,
     },
     {
         id: 11,
         size: "0.40-1.3",
-        addMuch: 12.0
+        addMuch: 12.0,
+        plating: 17.00,
     }
 ];
 const dataParams = {
@@ -195,16 +218,20 @@ schedule.scheduleJob(Rule2, () => {
                                     border: 1px solid #999999;">当日含税价单价</td>
                                     <td style="padding: 6px 3px;text-align: center;
                                     border: 1px solid #999999;">当日不含税单价</td>
+                                    <td style="padding: 6px 3px;text-align: center;
+                                    border: 1px solid #999999;">电镀加工费</td>
+                                    <td style="padding: 6px 3px;text-align: center;
+                                    border: 1px solid #999999;">电镀含税价格</td>
                                 </tr>`;
 
                     for (let e = 0, elen = listData.length; e < elen; e++) {
                         let item = listData[e],
                             colHtml = `<td rowspan="11" style="background: #a1d8fc;">${coPrice}</td>
                         <td rowspan="11" style="background: #c5a1fc;">${alPrice}</td>`;
-                        let { id, size, addMuch } = item;
+                        let { size, addMuch, plating } = item;
 
                         shtml += `<tr class="item">
-                                <td style="	padding: 6px 3px;text-align: center;border: 1px solid #999999;">${id}</td>
+                                <td style="	padding: 6px 3px;text-align: center;border: 1px solid #999999;">${e+1}</td>
                                 <td style="white-space: nowrap;	padding: 6px 3px;text-align: center;border: 1px solid #999999;">${size}</td>
                                 <td style="	padding: 6px 3px;text-align: center;border: 1px solid #999999;">${addMuch}</td>
                                 ${e === 0 ? colHtml : ""}
@@ -221,6 +248,10 @@ schedule.scheduleJob(Rule2, () => {
                                     item.addMuch) /
                                 1.08
                             ).toFixed(2)}</td>
+                                <td style=" padding: 6px 3px;text-align: center;\
+                                border: 1 px solid #999999;">${plating}</td>
+                                <td style=" padding: 6px 3px;text-align: center;\
+                                border: 1 px solid #999999;">${alPrice+plating}</td>
                             </tr>`;
                     }
                     shtml += '</table><p style="float: left"><img src="cid:img1"></p>';
