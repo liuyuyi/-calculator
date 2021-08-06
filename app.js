@@ -226,8 +226,8 @@ schedule.scheduleJob(Rule2, () => {
 
                     for (let e = 0, elen = listData.length; e < elen; e++) {
                         let item = listData[e],
-                            colHtml = `<td rowspan="11" style="background: #a1d8fc;">${coPrice}</td>
-                        <td rowspan="11" style="background: #c5a1fc;">${alPrice}</td>`;
+                            colHtml = `<td rowspan="13" style="background: #a1d8fc;">${coPrice}</td>
+                        <td rowspan="13" style="background: #c5a1fc;">${alPrice}</td>`;
                         let { size, addMuch, plating } = item;
 
                         shtml += `<tr class="item">
