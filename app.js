@@ -15,7 +15,7 @@ const config = {
     port: 465, //网易邮箱端口 25
     auth: {
         user: "339266478@qq.com", //邮箱账号
-        pass: "aybtlnprkprhcafc" //邮箱的授权码
+        pass: "sjewzwemdtzibhdc" //邮箱的授权码
     }
 };
 // 创建一个SMTP客户端对象
