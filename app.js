@@ -146,19 +146,19 @@ Rule2.minute = [00, 30];
                 width: 1280,
                 height: 960
             },
-            args: ['--no-sandbox', '--disable-setuid-sandbox', '--enable-gpu'
-                // '--headless',
-                // '--no-sandbox',
-                // '--disable-setuid-sandbox',
-                // '--disable-gpu',
-                // '--unlimited-storage',
-                // '--disable-dev-shm-usage',
-                // '--full-memory-crash-report',
-                // '--disable-extensions',
-                // '--mute-audio',
-                // '--no-zygote',
-                // '--no-first-run',
-                // '--start-maximized'
+            args: ['--no-sandbox', '--disable-setuid-sandbox', '--enable-gpu',
+                '--headless',
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+                '--disable-gpu',
+                '--unlimited-storage',
+                '--disable-dev-shm-usage',
+                '--full-memory-crash-report',
+                '--disable-extensions',
+                '--mute-audio',
+                '--no-zygote',
+                '--no-first-run',
+                '--start-maximized'
             ]
         });
         const page = await browser.newPage();
