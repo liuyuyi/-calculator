@@ -15,7 +15,7 @@ const config = {
     port: 465, //网易邮箱端口 25
     auth: {
         user: "339266478@qq.com", //邮箱账号
-        pass: "sjewzwemdtzibhdc" //邮箱的授权码
+        pass: "puwfvikmzlrlbjdf" //邮箱的授权码
     }
 };
 // 创建一个SMTP客户端对象
@@ -126,17 +126,17 @@ const dataParams = {
         type: Number
     }
 };
-// 铜
-const PriceCopperdb = mongoose.model("coppers", dataParams);
-// 铝
-const PriceAluminumsdb = mongoose.model("aluminums", dataParams);
+// // 铜
+// const PriceCopperdb = mongoose.model("coppers", dataParams);
+// // 铝
+// const PriceAluminumsdb = mongoose.model("aluminums", dataParams);
 
 // 定时器
 const Rule2 = new schedule.RecurrenceRule();
 Rule2.hour = [9, 10, 11];
 Rule2.minute = [00, 30];
 
-schedule.scheduleJob(Rule2, () => {
+// schedule.scheduleJob(Rule2, () => {
     (async () => {
         const browser = await puppeteer.launch({
             args: ["--no-sandbox", "--disable-setuid-sandbox"]
@@ -270,46 +270,46 @@ schedule.scheduleJob(Rule2, () => {
                     ];
 
                     // 铜价格保存
-                    PriceCopperdb.findOne(
-                        {
-                            upDateTime: priceData.upDateTime
-                        },
-                        (err, doc) => {
-                            if (doc === null) {
-                                let coPriceDb = new PriceCopperdb(
-                                    Object.assign(copper, priceData)
-                                );
-                                coPriceDb.save();
-                            }
-                        }
-                    );
+                    // PriceCopperdb.findOne(
+                    //     {
+                    //         upDateTime: priceData.upDateTime
+                    //     },
+                    //     (err, doc) => {
+                    //         if (doc === null) {
+                    //             let coPriceDb = new PriceCopperdb(
+                    //                 Object.assign(copper, priceData)
+                    //             );
+                    //             coPriceDb.save();
+                    //         }
+                    //     }
+                    // );
 
                     // 铝价格保存
-                    PriceAluminumsdb.findOne(
-                        {
-                            upDateTime: priceData.upDateTime
-                        },
-                        (err, doc) => {
-                            if (doc === null) {
-                                let alPriceDb = new PriceAluminumsdb(
-                                    Object.assign(aluminum, priceData)
-                                );
-                                alPriceDb.save();
+                    // PriceAluminumsdb.findOne(
+                    //     {
+                    //         upDateTime: priceData.upDateTime
+                    //     },
+                    //     (err, doc) => {
+                    //         if (doc === null) {
+                    //             let alPriceDb = new PriceAluminumsdb(
+                    //                 Object.assign(aluminum, priceData)
+                    //             );
+                    //             alPriceDb.save();
 
                                 send(mail);
                                 setTimeout(() => {
                                     fs.unlinkSync("./public/images/example.jpg");
                                 }, 2000);
-                            }
-                        }
-                    );
+                    //         }
+                    //     }
+                    // );
                 });
             })
             .on("error", function (err) {
                 console.log(err);
             });
     })();
-});
+// });
 
 // 发送邮件
 function send(mail) {
