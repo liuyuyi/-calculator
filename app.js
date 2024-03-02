@@ -139,26 +139,26 @@ Rule2.minute = [00, 30];
 // schedule.scheduleJob(Rule2, () => {
     (async () => {
         const browser = await puppeteer.launch({
-            headless: "new",
+            headless: true,
             dumpio: false,
             ignoreHTTPSErrors: true,
             defaultViewport: {
                 width: 1280,
                 height: 960
             },
-            args: [
-                '--headless',
-                '--no-sandbox',
-                '--disable-setuid-sandbox',
-                '--disable-gpu',
-                '--unlimited-storage',
-                '--disable-dev-shm-usage',
-                '--full-memory-crash-report',
-                '--disable-extensions',
-                '--mute-audio',
-                '--no-zygote',
-                '--no-first-run',
-                '--start-maximized'
+            args: ['--no-sandbox', '--disable-setuid-sandbox', '--enable-gpu'
+                // '--headless',
+                // '--no-sandbox',
+                // '--disable-setuid-sandbox',
+                // '--disable-gpu',
+                // '--unlimited-storage',
+                // '--disable-dev-shm-usage',
+                // '--full-memory-crash-report',
+                // '--disable-extensions',
+                // '--mute-audio',
+                // '--no-zygote',
+                // '--no-first-run',
+                // '--start-maximized'
             ]
         });
         const page = await browser.newPage();
