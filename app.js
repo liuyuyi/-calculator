@@ -139,7 +139,7 @@ Rule2.minute = [00, 30];
 // schedule.scheduleJob(Rule2, () => {
     (async () => {
         const browser = await puppeteer.launch({
-            headless: true,
+            headless: 'new',
             dumpio: false,
             ignoreHTTPSErrors: true,
             defaultViewport: {
@@ -163,7 +163,8 @@ Rule2.minute = [00, 30];
         });
         const page = await browser.newPage();
         console.log(3333)
-        await page.goto(targetUrl, { timeout: 10000*60, waitUntil: 'networkidle2' });
+            // , { timeout: 10000*60, waitUntil: 'networkidle2' }
+        await page.goto(targetUrl);
         console.log(22)
         await page.screenshot({
             path: "./public/images/example.jpg",
