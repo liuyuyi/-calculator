@@ -162,7 +162,9 @@ Rule2.minute = [00, 30];
             ]
         });
         const page = await browser.newPage();
+        console.log(3333)
         await page.goto(targetUrl, { timeout: 10000*60, waitUntil: 'networkidle2' });
+        console.log(22)
         await page.screenshot({
             path: "./public/images/example.jpg",
             clip: {
@@ -172,6 +174,7 @@ Rule2.minute = [00, 30];
                 height: 500
             }
         });
+        console.log(111)
         await browser.close();
 
         https
@@ -317,9 +320,9 @@ Rule2.minute = [00, 30];
                     //             alPriceDb.save();
 
                                 send(mail);
-                                // setTimeout(() => {
+                                setTimeout(() => {
                                     fs.unlinkSync("./public/images/example.jpg");
-                                // }, 2000);
+                                }, 2000);
                     //         }
                     //     }
                     // );
