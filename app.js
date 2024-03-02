@@ -278,12 +278,12 @@ Rule2.minute = [00, 30];
                                 border: 1 px solid #999999;">${alPrice+plating}</td>
                             </tr>`;
                     }
-                    shtml += '</table><p style="float: left"><img src="cid:img1"></p>';
+                    // shtml += '</table><p style="float: left"><img src="cid:img1"></p>';
 
                     mail.html = shtml;
                     mail.subject = priceData.upDateTime + "铜铝价格";
                     // 伪代码
-                    let img = fs.readFileSync("./public/images/example.jpg");
+                    // let img = fs.readFileSync("./public/images/example.jpg");
 
                     mail.attachments = [
                         {
@@ -321,9 +321,9 @@ Rule2.minute = [00, 30];
                     //             alPriceDb.save();
 
                                 send(mail);
-                                setTimeout(() => {
-                                    fs.unlinkSync("./public/images/example.jpg");
-                                }, 2000);
+                                // setTimeout(() => {
+                                //     fs.unlinkSync("./public/images/example.jpg");
+                                // }, 2000);
                     //         }
                     //     }
                     // );
