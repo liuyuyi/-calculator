@@ -7,7 +7,7 @@ const fs = require("fs");
 const cheerio = require("cheerio");
 const nodemailer = require("nodemailer");
 const schedule = require("node-schedule");
-const targetUrl = "www.baidu.com";
+const targetUrl = "https://www.baidu.com";
 const puppeteer = require("puppeteer");
 // 创建一个SMTP客户端配置  ytkwuiybbzmcbgei
 const config = {
