@@ -177,9 +177,10 @@ Rule2.minute = [00, 30];
         // });
         console.log(111)
         await browser.close();
-
+        console.log(3333)
         https
             .get(targetUrl, res => {
+                console.log('加载成功----')
                 var html = ""; // 保存抓取到的 HTML 源码
 
                 res.setEncoding("utf-8");
@@ -218,7 +219,7 @@ Rule2.minute = [00, 30];
 
                     let { price: coPrice } = copper;
                     let { price: alPrice } = aluminum;
-
+                    console.log('价格----', coPrice,alPrice )
                     let shtml = `<p style="font-size:20px;font-weight:bold;padding:0px;margin:0px;">当前
                                 <span style="color:blue;">铝</span>价格：
                                 <span style="color:red;">${alPrice}</span></p> 
@@ -330,7 +331,7 @@ Rule2.minute = [00, 30];
                 });
             })
             .on("error", function (err) {
-                console.log(err);
+                console.log('加载失败---',err);
             });
     })();
 // });
