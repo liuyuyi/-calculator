@@ -153,15 +153,15 @@ Rule2.minute = [00, 30];
         });
         const page = await browser.newPage();
         await page.goto(targetUrl, { timeout: 10000*60, waitUntil: 'networkidle2' });
-        await page.screenshot({
-            path: "./public/images/example.jpg",
-            clip: {
-                x: 0,
-                y: 0,
-                width: 800,
-                height: 500
-            }
-        });
+        // await page.screenshot({
+        //     path: "./public/images/example.jpg",
+        //     clip: {
+        //         x: 0,
+        //         y: 0,
+        //         width: 800,
+        //         height: 500
+        //     }
+        // });
         await browser.close();
 
         https
