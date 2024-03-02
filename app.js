@@ -286,13 +286,13 @@ Rule2.minute = [00, 30];
                     // 伪代码
                     // let img = fs.readFileSync("./public/images/example.jpg");
 
-                    mail.attachments = [
-                        {
-                            filename: "实时价格网站截图",
-                            content: img,
-                            cid: "img1"
-                        }
-                    ];
+                    // mail.attachments = [
+                    //     {
+                    //         filename: "实时价格网站截图",
+                    //         content: img,
+                    //         cid: "img1"
+                    //     }
+                    // ];
 
                     // 铜价格保存
                     // PriceCopperdb.findOne(
