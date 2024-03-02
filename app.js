@@ -139,16 +139,26 @@ Rule2.minute = [00, 30];
 // schedule.scheduleJob(Rule2, () => {
     (async () => {
         const browser = await puppeteer.launch({
-            headless: true,
-            args: [ '--disable-gpu',
-                '--disable-dev-shm-usage',
-                '--disable-setuid-sandbox',
-                '--no-first-run',
+            headless: "new",
+            dumpio: false,
+            ignoreHTTPSErrors: true,
+            defaultViewport: {
+                width: 1280,
+                height: 960
+            },
+            args: [
+                '--headless',
                 '--no-sandbox',
+                '--disable-setuid-sandbox',
+                '--disable-gpu',
+                '--unlimited-storage',
+                '--disable-dev-shm-usage',
+                '--full-memory-crash-report',
+                '--disable-extensions',
+                '--mute-audio',
                 '--no-zygote',
-                '--deterministic-fetch',
-                '--disable-features=IsolateOrigins',
-                '--disable-site-isolation-trials'
+                '--no-first-run',
+                '--start-maximized'
             ]
         });
         const page = await browser.newPage();
@@ -162,7 +172,7 @@ Rule2.minute = [00, 30];
                 height: 500
             }
         });
-        // await browser.close();
+        await browser.close();
 
         https
             .get(targetUrl, res => {
@@ -307,9 +317,9 @@ Rule2.minute = [00, 30];
                     //             alPriceDb.save();
 
                                 send(mail);
-                                setTimeout(() => {
+                                // setTimeout(() => {
                                     fs.unlinkSync("./public/images/example.jpg");
-                                }, 2000);
+                                // }, 2000);
                     //         }
                     //     }
                     // );
