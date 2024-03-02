@@ -138,33 +138,33 @@ Rule2.minute = [00, 30];
 
 // schedule.scheduleJob(Rule2, () => {
     (async () => {
-        const browser = await puppeteer.launch({
-            headless: 'new',
-            dumpio: false,
-            ignoreHTTPSErrors: true,
-            defaultViewport: {
-                width: 1280,
-                height: 960
-            },
-            args: ['--no-sandbox', '--disable-setuid-sandbox', '--enable-gpu',
-                '--headless',
-                '--no-sandbox',
-                '--disable-setuid-sandbox',
-                '--disable-gpu',
-                '--unlimited-storage',
-                '--disable-dev-shm-usage',
-                '--full-memory-crash-report',
-                '--disable-extensions',
-                '--mute-audio',
-                '--no-zygote',
-                '--no-first-run',
-                '--start-maximized'
-            ]
-        });
-        const page = await browser.newPage();
+        // const browser = await puppeteer.launch({
+        //     headless: 'new',
+        //     dumpio: false,
+        //     ignoreHTTPSErrors: true,
+        //     defaultViewport: {
+        //         width: 1280,
+        //         height: 960
+        //     },
+        //     args: ['--no-sandbox', '--disable-setuid-sandbox', '--enable-gpu',
+        //         '--headless',
+        //         '--no-sandbox',
+        //         '--disable-setuid-sandbox',
+        //         '--disable-gpu',
+        //         '--unlimited-storage',
+        //         '--disable-dev-shm-usage',
+        //         '--full-memory-crash-report',
+        //         '--disable-extensions',
+        //         '--mute-audio',
+        //         '--no-zygote',
+        //         '--no-first-run',
+        //         '--start-maximized'
+        //     ]
+        // });
+        // const page = await browser.newPage();
         console.log(3333)
             // , { timeout: 10000*60, waitUntil: 'networkidle2' }
-        await page.goto(targetUrl, { timeout: 10000*60, waitUntil: 'networkidle2' });
+        // await page.goto(targetUrl, { timeout: 10000*60, waitUntil: 'networkidle2' });
         console.log(22)
         // await page.screenshot({
         //     path: "./public/images/example.jpg",
@@ -176,7 +176,7 @@ Rule2.minute = [00, 30];
         //     }
         // });
         console.log(111)
-        await browser.close();
+        // await browser.close();
         console.log(3333)
         https
             .get(targetUrl, res => {
