@@ -139,10 +139,10 @@ Rule2.minute = [00, 30];
 // schedule.scheduleJob(Rule2, () => {
     (async () => {
         const browser = await puppeteer.launch({
-            args: ["--no-sandbox", "--disable-setuid-sandbox"]
+            args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage']
         });
         const page = await browser.newPage();
-        await page.goto(targetUrl, { timeout: 10000*60 });
+        await page.goto(targetUrl, { timeout: 10000*60, , waitUntil: 'networkidle2' });
         await page.screenshot({
             path: "./public/images/example.jpg",
             clip: {
