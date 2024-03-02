@@ -142,7 +142,7 @@ Rule2.minute = [00, 30];
             args: ["--no-sandbox", "--disable-setuid-sandbox"]
         });
         const page = await browser.newPage();
-        await page.goto(targetUrl);
+        await page.goto(targetUrl, { timeout: 10000*60 });
         await page.screenshot({
             path: "./public/images/example.jpg",
             clip: {
