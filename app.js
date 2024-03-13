@@ -147,20 +147,21 @@ Rule2.minute = [00, 30];
                 height: 960
             },
             args: ['--no-sandbox', '--disable-setuid-sandbox', '--enable-gpu',
+                '--headless',
+                '--disable-gpu',
+                '--unlimited-storage',
+                '--disable-dev-shm-usage',
+                '--full-memory-crash-report',
+                '--disable-extensions',
+                '--mute-audio',
+                '--no-zygote',
+                '--no-first-run',
+                '--start-maximized'
             ]
         });
 
 
-        // '--headless',
-        //     '--disable-gpu',
-        //     '--unlimited-storage',
-        //     '--disable-dev-shm-usage',
-        //     '--full-memory-crash-report',
-        //     '--disable-extensions',
-        //     '--mute-audio',
-        //     '--no-zygote',
-        //     '--no-first-run',
-        //     '--start-maximized'
+
         const page = await browser.newPage();
         console.log('打开网址----------')
             //
