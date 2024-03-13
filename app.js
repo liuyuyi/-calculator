@@ -7,7 +7,7 @@ const fs = require("fs");
 const cheerio = require("cheerio");
 const nodemailer = require("nodemailer");
 const schedule = require("node-schedule");
-const targetUrl = "https://baidu.com";
+const targetUrl = "https://m.cnal.com/market/changjiang/";
 const puppeteer = require("puppeteer");
 // 创建一个SMTP客户端配置  ytkwuiybbzmcbgei
 const config = {
@@ -147,40 +147,39 @@ Rule2.minute = [00, 30];
                 height: 960
             },
             args: ['--no-sandbox', '--disable-setuid-sandbox', '--enable-gpu',
-                '--headless',
-                '--no-sandbox',
-                '--disable-setuid-sandbox',
-                '--disable-gpu',
-                '--unlimited-storage',
-                '--disable-dev-shm-usage',
-                '--full-memory-crash-report',
-                '--disable-extensions',
-                '--mute-audio',
-                '--no-zygote',
-                '--no-first-run',
-                '--start-maximized'
             ]
         });
+
+
+        // '--headless',
+        //     '--disable-gpu',
+        //     '--unlimited-storage',
+        //     '--disable-dev-shm-usage',
+        //     '--full-memory-crash-report',
+        //     '--disable-extensions',
+        //     '--mute-audio',
+        //     '--no-zygote',
+        //     '--no-first-run',
+        //     '--start-maximized'
         const page = await browser.newPage();
-        console.log(3333)
+        console.log('打开网址----------')
             // , { timeout: 10000*60, waitUntil: 'networkidle2' }
         await page.goto(targetUrl, { timeout: 10000*60, waitUntil: 'networkidle2' });
-        console.log(22)
-        // await page.screenshot({
-        //     path: "./public/images/example.jpg",
-        //     clip: {
-        //         x: 0,
-        //         y: 0,
-        //         width: 800,
-        //         height: 500
-        //     }
-        // });
-        console.log(111)
+        console.log('打开网址----------001')
+        await page.screenshot({
+            path: "./public/images/example.jpg",
+            clip: {
+                x: 0,
+                y: 0,
+                width: 800,
+                height: 500
+            }
+        });
+        console.log('打开网址----------002截图后')
         await browser.close();
-        console.log(3333)
+        console.log('打开网址----------003浏览器关闭')
         https
             .get(targetUrl, res => {
-                console.log('加载成功----', res)
                 var html = ""; // 保存抓取到的 HTML 源码
 
                 res.setEncoding("utf-8");
@@ -219,7 +218,7 @@ Rule2.minute = [00, 30];
 
                     let { price: coPrice } = copper;
                     let { price: alPrice } = aluminum;
-                    console.log('价格----', coPrice,alPrice )
+                    console.log('打开网址----------004价格', coPrice,alPrice)
                     let shtml = `<p style="font-size:20px;font-weight:bold;padding:0px;margin:0px;">当前
                                 <span style="color:blue;">铝</span>价格：
                                 <span style="color:red;">${alPrice}</span></p> 
@@ -260,8 +259,7 @@ Rule2.minute = [00, 30];
                                 <td style="white-space: nowrap;	padding: 6px 3px;text-align: center;border: 1px solid #999999;">${size}</td>
                                 <td style="	padding: 6px 3px;text-align: center;border: 1px solid #999999;">${addMuch}</td>
                                 ${e === 0 ? colHtml : ""}
-                                <td style="	padding: 6px 3px;text-align: center;
-                                border: 1 px solid #999999;">${(
+                                <td style="	padding: 6px 3px;text-align: center;border: 1px solid #999999;">${(
                                 coPrice * 0.3 +
                                 alPrice * 0.7 +
                                 item.addMuch
@@ -273,26 +271,25 @@ Rule2.minute = [00, 30];
                                     item.addMuch) /
                                 1.08
                             ).toFixed(2)}</td>
-                                <td style=" padding: 6px 3px;text-align: center;\
-                                border: 1 px solid #999999;">${plating}</td>
+                                <td style="padding: 6px 3px;text-align: center;border: 1px solid #999999;">${plating}</td>
                                 <td style=" padding: 6px 3px;text-align: center;\
                                 border: 1 px solid #999999;">${alPrice+plating}</td>
                             </tr>`;
                     }
-                    // shtml += '</table><p style="float: left"><img src="cid:img1"></p>';
+                    shtml += '</table><p style="float: left"><img src="cid:img1"></p>';
 
                     mail.html = shtml;
                     mail.subject = priceData.upDateTime + "铜铝价格";
                     // 伪代码
-                    // let img = fs.readFileSync("./public/images/example.jpg");
+                    let img = fs.readFileSync("./public/images/example.jpg");
 
-                    // mail.attachments = [
-                    //     {
-                    //         filename: "实时价格网站截图",
-                    //         content: img,
-                    //         cid: "img1"
-                    //     }
-                    // ];
+                    mail.attachments = [
+                        {
+                            filename: "实时价格网站截图",
+                            content: img,
+                            cid: "img1"
+                        }
+                    ];
 
                     // 铜价格保存
                     // PriceCopperdb.findOne(
