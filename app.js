@@ -163,8 +163,8 @@ Rule2.minute = [00, 30];
         //     '--start-maximized'
         const page = await browser.newPage();
         console.log('打开网址----------')
-            // , { timeout: 10000*60, waitUntil: 'networkidle2' }
-        await page.goto(targetUrl);
+            //
+        await page.goto(targetUrl, { timeout: 10000*60, waitUntil: 'networkidle2' });
         console.log('打开网址----------001')
         // await page.screenshot({
         //     path: "./public/images/example.jpg",
