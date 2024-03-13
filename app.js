@@ -8,6 +8,7 @@ const cheerio = require("cheerio");
 const nodemailer = require("nodemailer");
 const schedule = require("node-schedule");
 const targetUrl = "https://m.cnal.com/market/changjiang/";
+//
 const puppeteer = require("puppeteer");
 // 创建一个SMTP客户端配置  ytkwuiybbzmcbgei
 const config = {
@@ -165,7 +166,7 @@ Rule2.minute = [00, 30];
         const page = await browser.newPage();
         console.log('打开网址----------')
             //
-        await page.goto(targetUrl, { timeout: 100000000*60, waitUntil: 'networkidle2' });
+        await page.goto(targetUrl, { timeout: 10000*60, waitUntil: 'networkidle2' });
         console.log('打开网址----------001')
         // await page.screenshot({
         //     path: "./public/images/example.jpg",
