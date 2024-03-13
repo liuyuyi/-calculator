@@ -166,15 +166,15 @@ Rule2.minute = [00, 30];
             // , { timeout: 10000*60, waitUntil: 'networkidle2' }
         await page.goto(targetUrl);
         console.log('打开网址----------001')
-        await page.screenshot({
-            path: "./public/images/example.jpg",
-            clip: {
-                x: 0,
-                y: 0,
-                width: 800,
-                height: 500
-            }
-        });
+        // await page.screenshot({
+        //     path: "./public/images/example.jpg",
+        //     clip: {
+        //         x: 0,
+        //         y: 0,
+        //         width: 800,
+        //         height: 500
+        //     }
+        // });
         console.log('打开网址----------002截图后')
         await browser.close();
         console.log('打开网址----------003浏览器关闭')
