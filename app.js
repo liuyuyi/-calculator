@@ -164,7 +164,7 @@ Rule2.minute = [00, 30];
         const page = await browser.newPage();
         console.log('打开网址----------')
             //
-        await page.goto(targetUrl, { timeout: 10000*60, waitUntil: 'networkidle2' });
+        await page.goto(targetUrl, { timeout: 100000000*60, waitUntil: 'networkidle2' });
         console.log('打开网址----------001')
         // await page.screenshot({
         //     path: "./public/images/example.jpg",
