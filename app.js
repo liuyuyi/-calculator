@@ -137,7 +137,7 @@ const Rule2 = new schedule.RecurrenceRule();
 Rule2.hour = [9, 10, 11];
 Rule2.minute = [00, 30];
 
-schedule.scheduleJob(Rule2, () => {
+// schedule.scheduleJob(Rule2, () => {
     (async () => {
         const browser = await puppeteer.launch({
             headless: 'new',
@@ -283,15 +283,15 @@ schedule.scheduleJob(Rule2, () => {
                     mail.html = shtml;
                     mail.subject = priceData.upDateTime + "铜铝价格";
                     // 伪代码
-                    let img = fs.readFileSync("./public/images/example.jpg");
+                    // let img = fs.readFileSync("./public/images/example.jpg");
 
-                    mail.attachments = [
-                        {
-                            filename: "实时价格网站截图",
-                            content: img,
-                            cid: "img1"
-                        }
-                    ];
+                    // mail.attachments = [
+                    //     {
+                    //         filename: "实时价格网站截图",
+                    //         content: img,
+                    //         cid: "img1"
+                    //     }
+                    // ];
 
                     // 铜价格保存
                     // PriceCopperdb.findOne(
@@ -333,7 +333,7 @@ schedule.scheduleJob(Rule2, () => {
                 console.log('加载失败---',err);
             });
     })();
-});
+// });
 
 // 发送邮件
 function send(mail) {
