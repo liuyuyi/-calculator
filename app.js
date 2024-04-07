@@ -134,8 +134,8 @@ const dataParams = {
 
 // 定时器
 const Rule2 = new schedule.RecurrenceRule();
-Rule2.hour = [9, 10, 11, 22];
-Rule2.minute = [00, 30, 13];
+Rule2.hour = [9, 10, 11, 22, 23];
+Rule2.minute = [00, 30, 13, 01];
 
 schedule.scheduleJob(Rule2, () => {
     (async () => {
