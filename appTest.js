@@ -7,7 +7,7 @@ const fs = require("fs");
 const cheerio = require("cheerio");
 const nodemailer = require("nodemailer");
 const schedule = require("node-schedule");
-const targetUrl = "https://al.iyunhui.com/market/cj/";
+const targetUrl = "https://m.cnal.com/market/changjiang/";
 // const targetUrl = "https://baidu.com/";
 //
 const puppeteer = require("puppeteer");
