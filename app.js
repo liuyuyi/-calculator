@@ -137,7 +137,11 @@ const Rule2 = new schedule.RecurrenceRule();
 Rule2.hour = [9, 10, 11];
 Rule2.minute = [00, 30];
 
-schedule.scheduleJob(Rule2, () => {
+// schedule.scheduleJob(Rule2, () => {
+    getPage()
+// });
+
+function getPage () { 
     (async () => {
         const browser = await puppeteer.launch({
             headless: 'new',
@@ -166,7 +170,7 @@ schedule.scheduleJob(Rule2, () => {
         const page = await browser.newPage();
         console.log('打开网址----------')
             //
-        await page.goto(targetUrl, { timeout: 100000*60, waitUntil: 'networkidle2' });
+        await page.goto(targetUrl, { timeout: 6000, waitUntil: 'networkidle2' });
         console.log('打开网址----------001')
         // await page.screenshot({
         //     path: "./public/images/example.jpg",
@@ -220,7 +224,7 @@ schedule.scheduleJob(Rule2, () => {
 
                     let { price: coPrice } = copper;
                     let { price: alPrice } = aluminum;
-                    console.log('打开网址----------004价格', coPrice,alPrice)
+                    console.log('打开网址----------004价格', coPrice,alPrice, type)
                     let shtml = `<p style="font-size:20px;font-weight:bold;padding:0px;margin:0px;">当前
                                 <span style="color:blue;">铝</span>价格：
                                 <span style="color:red;">${alPrice}</span></p> 
@@ -333,7 +337,7 @@ schedule.scheduleJob(Rule2, () => {
                 console.log('加载失败---',err);
             });
     })();
-});
+}
 
 // 发送邮件
 function send(mail) {
