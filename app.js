@@ -224,7 +224,7 @@ function getPage () {
 
                     let { price: coPrice } = copper;
                     let { price: alPrice } = aluminum;
-                    console.log('打开网址----------004价格', coPrice,alPrice, $)
+                    console.log('打开网址----------004价格', coPrice,alPrice, $, html)
                     let shtml = `<p style="font-size:20px;font-weight:bold;padding:0px;margin:0px;">当前
                                 <span style="color:blue;">铝</span>价格：
                                 <span style="color:red;">${alPrice}</span></p> 
