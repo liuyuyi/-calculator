@@ -218,13 +218,13 @@ function getPage () {
                             copper.price = ($($parent.find("td")[2]).text() * 1) / 1000;
                             copper.type = 1;
                         }
-
+                        console.log('type----', type)
                         priceData.upDateTime = $($parent.find("td")[4]).text();
                     }
 
                     let { price: coPrice } = copper;
                     let { price: alPrice } = aluminum;
-                    console.log('打开网址----------004价格', coPrice,alPrice, type)
+                    console.log('打开网址----------004价格', coPrice,alPrice)
                     let shtml = `<p style="font-size:20px;font-weight:bold;padding:0px;margin:0px;">当前
                                 <span style="color:blue;">铝</span>价格：
                                 <span style="color:red;">${alPrice}</span></p> 
