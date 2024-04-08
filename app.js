@@ -224,7 +224,6 @@ function getPage () {
 
                     let { price: coPrice } = copper;
                     let { price: alPrice } = aluminum;
-                    console.log('打开网址----------004价格', $, html)
                     console.log(coPrice, alPrice)
                     if (copper === undefined) { 
                         getPage()
