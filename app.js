@@ -137,9 +137,9 @@ const Rule2 = new schedule.RecurrenceRule();
 Rule2.hour = [9, 10, 11];
 Rule2.minute = [00, 30];
 
-// schedule.scheduleJob(Rule2, () => {
+schedule.scheduleJob(Rule2, () => {
     getPage()
-// });
+});
 
 function getPage () { 
     (async () => {
@@ -225,7 +225,11 @@ function getPage () {
                     let { price: coPrice } = copper;
                     let { price: alPrice } = aluminum;
                     console.log('打开网址----------004价格', $, html)
-                    console.log( coPrice,alPrice)
+                    console.log(coPrice, alPrice)
+                    if (copper === undefined) { 
+                        getPage()
+                        return
+                    }
                     let shtml = `<p style="font-size:20px;font-weight:bold;padding:0px;margin:0px;">当前
                                 <span style="color:blue;">铝</span>价格：
                                 <span style="color:red;">${alPrice}</span></p> 
