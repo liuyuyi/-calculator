@@ -136,6 +136,7 @@ const dataParams = {
 const Rule2 = new schedule.RecurrenceRule();
 Rule2.hour = [9, 10, 11];
 Rule2.minute = [00, 30];
+const repTime = 0
 
 // schedule.scheduleJob(Rule2, () => {
     getPage()
@@ -225,9 +226,15 @@ function getPage () {
                     let { price: coPrice } = copper;
                     let { price: alPrice } = aluminum;
                     console.log(coPrice, alPrice)
-                    if (coPrice > 0) { 
+                    if (!coPrice) { 
                         console.log('报错----')
-                        getPage()
+                        if (repTime < 6) {
+                            repTime++
+                            getPage()
+                        } else { 
+                            repTime = 0
+                            new Error('获取不到价格')
+                        }
                         return
                     }
                     let shtml = `<p style="font-size:20px;font-weight:bold;padding:0px;margin:0px;">当前
