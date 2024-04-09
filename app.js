@@ -134,9 +134,11 @@ const dataParams = {
 
 // 定时器
 const Rule2 = new schedule.RecurrenceRule();
-Rule2.hour = [9, 10, 11];
-Rule2.minute = [00, 30];
+Rule2.hour = [9, 10, 11, 21];
+Rule2.minute = [00, 30, 48, 49, 50];
 const repTime = 0
+const nowCoPrice = 0
+const nowAlPrice = 0
 
 schedule.scheduleJob(Rule2, () => {
     getPage()
@@ -165,8 +167,6 @@ function getPage () {
                 '--start-maximized'
             ]
         });
-
-
 
         const page = await browser.newPage();
         console.log('打开网址----------')
@@ -237,6 +237,8 @@ function getPage () {
                         }
                         return
                     }
+
+
                     let shtml = `<p style="font-size:20px;font-weight:bold;padding:0px;margin:0px;">当前
                                 <span style="color:blue;">铝</span>价格：
                                 <span style="color:red;">${alPrice}</span></p> 
@@ -335,8 +337,13 @@ function getPage () {
                     //                 Object.assign(aluminum, priceData)
                     //             );
                     //             alPriceDb.save();
-
-                                send(mail);
+                    if (nowCoPrice === coPrice && nowAlPrice === alPrice) {
+                        console.log('价格相同')
+                        reutrn
+                    }
+                    send(mail);
+                    nowCoPrice = coPrice
+                    nowAlPrice = alPrice
                                 // setTimeout(() => {
                                 //     fs.unlinkSync("./public/images/example.jpg");
                                 // }, 2000);
