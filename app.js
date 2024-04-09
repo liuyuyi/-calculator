@@ -225,7 +225,8 @@ function getPage () {
                     let { price: coPrice } = copper;
                     let { price: alPrice } = aluminum;
                     console.log(coPrice, alPrice)
-                    if (copper === undefined || copper === 'undefined') { 
+                    if (copper) { 
+                        console.log('报错----')
                         getPage()
                         return
                     }
