@@ -137,9 +137,9 @@ const Rule2 = new schedule.RecurrenceRule();
 Rule2.hour = [9, 10, 11];
 Rule2.minute = [00, 30];
 
-schedule.scheduleJob(Rule2, () => {
+// schedule.scheduleJob(Rule2, () => {
     getPage()
-});
+// });
 
 function getPage () { 
     (async () => {
