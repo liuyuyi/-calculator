@@ -134,8 +134,8 @@ const dataParams = {
 
 // 定时器
 const Rule2 = new schedule.RecurrenceRule();
-Rule2.hour = [9, 10, 11, 21];
-Rule2.minute = [00, 30, 48, 49, 50];
+Rule2.hour = [9, 10, 11];
+Rule2.minute = [00, 15];
 const repTime = 0
 const nowCoPrice = 0
 const nowAlPrice = 0
@@ -145,7 +145,7 @@ schedule.scheduleJob(Rule2, () => {
 });
 
 function getPage () { 
-    (async () => {
+    (async (nowCoPrice, nowAlPrice) => {
         const browser = await puppeteer.launch({
             headless: 'new',
             dumpio: false,
@@ -339,7 +339,7 @@ function getPage () {
                     //             alPriceDb.save();
                     if (nowCoPrice === coPrice && nowAlPrice === alPrice) {
                         console.log('价格相同')
-                        reutrn
+                        return
                     }
                     send(mail);
                     nowCoPrice = coPrice
@@ -355,7 +355,7 @@ function getPage () {
             .on("error", function (err) {
                 console.log('加载失败---',err);
             });
-    })();
+    })(nowCoPrice, nowAlPrice);
 }
 
 // 发送邮件
