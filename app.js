@@ -138,9 +138,9 @@ Rule2.hour = [9, 10, 11];
 Rule2.minute = [00, 30];
 const repTime = 0
 
-// schedule.scheduleJob(Rule2, () => {
+schedule.scheduleJob(Rule2, () => {
     getPage()
-// });
+});
 
 function getPage () { 
     (async () => {
