@@ -170,7 +170,7 @@ function getPage () {
         const page = await browser.newPage();
         console.log('打开网址----------')
             //
-        await page.goto(targetUrl, { timeout: 6000, waitUntil: 'networkidle2' });
+        await page.goto(targetUrl, { timeout: 60000 });
         console.log('打开网址----------001')
         await page.screenshot({
             path: "./public/images/example.jpg",
