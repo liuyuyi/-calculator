@@ -172,15 +172,15 @@ function getPage () {
             //
         await page.goto(targetUrl, { timeout: 6000, waitUntil: 'networkidle2' });
         console.log('打开网址----------001')
-        // await page.screenshot({
-        //     path: "./public/images/example.jpg",
-        //     clip: {
-        //         x: 0,
-        //         y: 0,
-        //         width: 800,
-        //         height: 500
-        //     }
-        // });
+        await page.screenshot({
+            path: "./public/images/example.jpg",
+            clip: {
+                x: 0,
+                y: 0,
+                width: 800,
+                height: 500
+            }
+        });
         console.log('打开网址----------002截图后')
         await browser.close();
         console.log('打开网址----------003浏览器关闭')
@@ -291,15 +291,15 @@ function getPage () {
                     mail.html = shtml;
                     mail.subject = priceData.upDateTime + "铜铝价格";
                     // 伪代码
-                    // let img = fs.readFileSync("./public/images/example.jpg");
+                    let img = fs.readFileSync("./public/images/example.jpg");
 
-                    // mail.attachments = [
-                    //     {
-                    //         filename: "实时价格网站截图",
-                    //         content: img,
-                    //         cid: "img1"
-                    //     }
-                    // ];
+                    mail.attachments = [
+                        {
+                            filename: "实时价格网站截图",
+                            content: img,
+                            cid: "img1"
+                        }
+                    ];
 
                     // 铜价格保存
                     // PriceCopperdb.findOne(
