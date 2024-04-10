@@ -136,9 +136,9 @@ const dataParams = {
 const Rule2 = new schedule.RecurrenceRule();
 Rule2.hour = [9, 10, 11];
 Rule2.minute = [00, 15];
-const repTime = 0
-const nowCoPrice = 0
-const nowAlPrice = 0
+let repTime = 0
+let nowCoPrice = 0
+let nowAlPrice = 0
 
 schedule.scheduleJob(Rule2, () => {
     getPage()
